@@ -9,6 +9,7 @@
   <ItemGroup>
     <Folder Include="Implementation\" />
     <Folder Include="Implementation\Section_0\" />
+    <Folder Include="Implementation\Section_1\" />
   </ItemGroup>
 
 </Project>
