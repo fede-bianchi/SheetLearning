@@ -1,6 +1,7 @@
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using MusicApp.Application.UseCases.Auth;
+using MusicApp.Application.UseCases.Exercises;
 using MusicApp.Application.UseCases.Users;
 using MusicApp.Application.Validators;
 
@@ -23,6 +24,15 @@ public static class DependencyInjection
         services.AddScoped<ChangePasswordHandler>();
         services.AddScoped<DeleteMyAccountHandler>();
         services.AddScoped<GetPublicProfileHandler>();
+
+        services.AddScoped<GetExerciseTypesHandler>();
+        services.AddScoped<GetLevelsHandler>();
+        services.AddScoped<GetLevelDetailHandler>();
+        services.AddScoped<GetLevelsByExerciseTypeHandler>();
+        services.AddScoped<GetMyProgressHandler>();
+        services.AddScoped<SaveAttemptHandler>();
+        services.AddScoped<GetMyBestScoresHandler>();
+        services.AddScoped<GetMyAttemptsHandler>();
 
         return services;
     }

@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MusicApp.Application.Interfaces;
+using MusicApp.Infrastructure.Persistence;
 using MusicApp.Infrastructure.Repositories;
 using MusicApp.Infrastructure.Security;
 
@@ -16,6 +17,13 @@ public static class DependencyInjection
         services.AddScoped<ISessionRepository, SessionRepository>();
         services.AddSingleton<IPasswordHasher, Argon2PasswordHasher>();
         services.AddScoped<IJwtService, JwtService>();
+
+        services.AddScoped<IExerciseTypeRepository, ExerciseTypeRepository>();
+        services.AddScoped<ILevelRepository, LevelRepository>();
+        services.AddScoped<IAttemptRepository, AttemptRepository>();
+        services.AddScoped<IBestScoreRepository, BestScoreRepository>();
+        services.AddScoped<IUserLevelProgressRepository, UserLevelProgressRepository>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;
     }

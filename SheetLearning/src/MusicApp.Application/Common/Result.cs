@@ -38,4 +38,11 @@ public static class ErrorCodes
     public const string WrongPassword = "WRONG_PASSWORD";
     public const string NicknameConflict = "NICKNAME_CONFLICT";
     public const string UnderAge = "UNDER_AGE";
+
+    public const string ExerciseTypeNotFound = "EXERCISE_TYPE_NOT_FOUND";
+    public const string LevelNotFound = "LEVEL_NOT_FOUND";
+    public const string LevelExerciseMismatch = "LEVEL_EXERCISE_MISMATCH";
+    public const string AttemptNotFound = "ATTEMPT_NOT_FOUND";
+    public const string InvalidDifficolta = "INVALID_DIFFICOLTA";
+    public const string InvalidPunteggio = "INVALID_PUNTEGGIO";
 }
