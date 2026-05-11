@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using MusicApp.Application.Common;
 using MusicApp.Application.DTOs;
 using MusicApp.Application.Interfaces;
+using MusicApp.Application.UseCases.Bundles;
 using MusicApp.Application.UseCases.Exercises;
 using MusicApp.Application.UseCases.Users;
 using MusicApp.Web.Models;
@@ -22,6 +23,7 @@ public class UsersController : ControllerBase
     private readonly GetMyProgressHandler _getMyProgressHandler;
     private readonly GetMyBestScoresHandler _getMyBestScoresHandler;
     private readonly GetMyAttemptsHandler _getMyAttemptsHandler;
+    private readonly GetMyBundlePurchasesHandler _getMyBundlePurchasesHandler;
     private readonly IRefreshCookieHelper _refreshCookieHelper;
 
     public UsersController(
@@ -33,6 +35,7 @@ public class UsersController : ControllerBase
         GetMyProgressHandler getMyProgressHandler,
         GetMyBestScoresHandler getMyBestScoresHandler,
         GetMyAttemptsHandler getMyAttemptsHandler,
+        GetMyBundlePurchasesHandler getMyBundlePurchasesHandler,
         IRefreshCookieHelper refreshCookieHelper)
     {
         _getMyProfileHandler = getMyProfileHandler;
@@ -43,6 +46,7 @@ public class UsersController : ControllerBase
         _getMyProgressHandler = getMyProgressHandler;
         _getMyBestScoresHandler = getMyBestScoresHandler;
         _getMyAttemptsHandler = getMyAttemptsHandler;
+        _getMyBundlePurchasesHandler = getMyBundlePurchasesHandler;
         _refreshCookieHelper = refreshCookieHelper;
     }
 
@@ -218,6 +222,15 @@ public class UsersController : ControllerBase
                 new ApiError(result.ErrorCode ?? "BAD_REQUEST", result.ErrorMessage ?? "Richiesta non valida."));
         }
 
+        return Ok(result.Value);
+    }
+
+    [HttpGet("me/bundle-purchases")]
+    [Authorize]
+    public async Task<IActionResult> GetMyBundlePurchases()
+    {
+        var userId = GetCurrentUserId();
+        var result = await _getMyBundlePurchasesHandler.HandleAsync(userId);
         return Ok(result.Value);
     }
 

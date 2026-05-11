@@ -1,8 +1,12 @@
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using MusicApp.Application.UseCases.Auth;
+using MusicApp.Application.UseCases.Bookings;
+using MusicApp.Application.UseCases.Bundles;
 using MusicApp.Application.UseCases.Exercises;
 using MusicApp.Application.UseCases.Forum;
+using MusicApp.Application.UseCases.Slots;
+using MusicApp.Application.UseCases.Teachers;
 using MusicApp.Application.UseCases.Users;
 using MusicApp.Application.Validators;
 
@@ -46,6 +50,32 @@ public static class DependencyInjection
         services.AddScoped<DeleteCommentHandler>();
         services.AddScoped<UpsertVoteHandler>();
         services.AddScoped<RemoveVoteHandler>();
+
+        // Phase 4 — Teachers
+        services.AddScoped<GetTeachersHandler>();
+        services.AddScoped<GetTeacherPublicProfileHandler>();
+        services.AddScoped<GetMyTeacherProfileHandler>();
+        services.AddScoped<UpdateMyTeacherProfileHandler>();
+        services.AddScoped<SetMyCategoriesHandler>();
+        services.AddScoped<GetMyStudentsHandler>();
+        services.AddScoped<GetStudentDetailHandler>();
+        services.AddScoped<GetStudentBookingsHandler>();
+        // Phase 4 — Slots
+        services.AddScoped<GetTeacherSlotsHandler>();
+        services.AddScoped<GetMyTeacherSlotsHandler>();
+        services.AddScoped<CreateSlotHandler>();
+        services.AddScoped<DeleteSlotHandler>();
+        // Phase 4 — Bookings
+        services.AddScoped<GetMyBookingsHandler>();
+        services.AddScoped<GetBookingDetailHandler>();
+        services.AddScoped<CreateBookingHandler>();
+        services.AddScoped<ConfirmBookingHandler>();
+        services.AddScoped<CancelBookingHandler>();
+        services.AddScoped<CompleteBookingHandler>();
+        services.AddScoped<CreateRatingHandler>();
+        // Phase 4 — Bundles
+        services.AddScoped<GetActiveBundlesHandler>();
+        services.AddScoped<GetMyBundlePurchasesHandler>();
 
         return services;
     }

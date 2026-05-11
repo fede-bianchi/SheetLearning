@@ -28,6 +28,14 @@ public static class DependencyInjection
         services.AddScoped<IVoteRepository, VoteRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+        // Phase 4
+        services.AddScoped<ITeacherProfileRepository, TeacherProfileRepository>();
+        services.AddScoped<ILessonSlotRepository, LessonSlotRepository>();
+        services.AddScoped<ILessonBookingRepository, LessonBookingRepository>();
+        services.AddScoped<ILessonBundleRepository, LessonBundleRepository>();
+        services.AddScoped<ILessonBundlePurchaseRepository, LessonBundlePurchaseRepository>();
+        services.AddScoped<ILessonRatingRepository, LessonRatingRepository>();
+
         return services;
     }
 }

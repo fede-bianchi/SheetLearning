@@ -54,4 +54,25 @@ public static class ErrorCodes
     public const string Forbidden = "FORBIDDEN";
     public const string VoteTargetNotFound = "VOTE_TARGET_NOT_FOUND";
     public const string InvalidTargetType = "INVALID_TARGET_TYPE";
+
+    // Phase 4
+    public const string TeacherProfileNotFound    = "TEACHER_PROFILE_NOT_FOUND";
+    public const string TeacherNotVisible         = "TEACHER_NOT_VISIBLE";
+    public const string SlotNotFound              = "SLOT_NOT_FOUND";
+    public const string SlotNotAvailable          = "SLOT_NOT_AVAILABLE";
+    public const string SlotAlreadyBooked         = "SLOT_ALREADY_BOOKED";
+    public const string SlotTeacherMismatch       = "SLOT_TEACHER_MISMATCH";
+    public const string BookingNotFound           = "BOOKING_NOT_FOUND";
+    public const string BookingInvalidTransition  = "BOOKING_INVALID_TRANSITION";
+    public const string RatingWindowExpired       = "RATING_WINDOW_EXPIRED";
+    public const string RatingAlreadyExists       = "RATING_ALREADY_EXISTS";
+    public const string BundleNotFound            = "BUNDLE_NOT_FOUND";
+    public const string BundleInactive            = "BUNDLE_INACTIVE";
+    public const string BundleExhausted           = "BUNDLE_EXHAUSTED";
+    public const string BundleExpired             = "BUNDLE_EXPIRED";
+    public const string BundlePurchaseNotFound    = "BUNDLE_PURCHASE_NOT_FOUND";
+    public const string StudentNotFound           = "STUDENT_NOT_FOUND";
+    public const string TeacherStudentUnrelated   = "TEACHER_STUDENT_UNRELATED";
+    public const string CannotBookOwnSlot         = "CANNOT_BOOK_OWN_SLOT";
+    public const string InvalidCategoryCount      = "INVALID_CATEGORY_COUNT";
 }

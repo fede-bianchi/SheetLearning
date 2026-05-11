@@ -34,6 +34,14 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddScoped<IRefreshCookieHelper, RefreshCookieHelper>();
 builder.Services.AddSingleton<IAuthorizationHandler, OwnerOrAdminHandler>();
 
+// Phase 4 — authorization handler registrations
+builder.Services.AddSingleton<IAuthorizationHandler, TeacherOwnsSlotHandler>();
+builder.Services.AddSingleton<IAuthorizationHandler, TeacherOwnsBookingHandler>();
+builder.Services.AddSingleton<IAuthorizationHandler, StudentOwnsBookingHandler>();
+builder.Services.AddSingleton<IAuthorizationHandler, BookingParticipantHandler>();
+builder.Services.AddScoped<IAuthorizationHandler, TeacherManagesStudentHandler>();
+builder.Services.AddSingleton<IAuthorizationHandler, RatingWindowHandler>();
+
 var jwtOptions = builder.Configuration.GetSection(WebJwtOptions.SectionName)
     .Get<WebJwtOptions>() ?? new WebJwtOptions();
 
@@ -95,6 +103,46 @@ builder.Services.AddAuthorization(options =>
         policy.RequireAuthenticatedUser()
             .RequireClaim("is_active", "True")
             .AddRequirements(new OwnerOrAdminRequirement()));
+
+    // Phase 4 — IsTeacher policy (claim-based, no resource handler)
+    options.AddPolicy("IsTeacher", policy =>
+        policy.RequireAuthenticatedUser()
+              .RequireClaim("is_active", "True")
+              .RequireClaim("role", "Insegnante"));
+
+    // Phase 4 — resource-based policies
+    options.AddPolicy("TeacherOwnsSlot", policy =>
+        policy.RequireAuthenticatedUser()
+              .RequireClaim("is_active", "True")
+              .RequireClaim("role", "Insegnante")
+              .AddRequirements(new TeacherOwnsSlotRequirement()));
+
+    options.AddPolicy("TeacherOwnsBooking", policy =>
+        policy.RequireAuthenticatedUser()
+              .RequireClaim("is_active", "True")
+              .RequireClaim("role", "Insegnante")
+              .AddRequirements(new TeacherOwnsBookingRequirement()));
+
+    options.AddPolicy("StudentOwnsBooking", policy =>
+        policy.RequireAuthenticatedUser()
+              .RequireClaim("is_active", "True")
+              .AddRequirements(new StudentOwnsBookingRequirement()));
+
+    options.AddPolicy("BookingParticipant", policy =>
+        policy.RequireAuthenticatedUser()
+              .RequireClaim("is_active", "True")
+              .AddRequirements(new BookingParticipantRequirement()));
+
+    options.AddPolicy("TeacherManagesStudent", policy =>
+        policy.RequireAuthenticatedUser()
+              .RequireClaim("is_active", "True")
+              .RequireClaim("role", "Insegnante")
+              .AddRequirements(new TeacherManagesStudentRequirement()));
+
+    options.AddPolicy("RatingWindow", policy =>
+        policy.RequireAuthenticatedUser()
+              .RequireClaim("is_active", "True")
+              .AddRequirements(new RatingWindowRequirement()));
 });
 
 builder.Services.AddFluentValidationAutoValidation();
