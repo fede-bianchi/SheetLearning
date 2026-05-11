@@ -23,6 +23,9 @@ public static class DependencyInjection
         services.AddScoped<IAttemptRepository, AttemptRepository>();
         services.AddScoped<IBestScoreRepository, BestScoreRepository>();
         services.AddScoped<IUserLevelProgressRepository, UserLevelProgressRepository>();
+        services.AddScoped<IPostRepository, PostRepository>();
+        services.AddScoped<ICommentRepository, CommentRepository>();
+        services.AddScoped<IVoteRepository, VoteRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;

@@ -5,8 +5,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MusicApp.Application;
+using MusicApp.Application.Authorization;
 using MusicApp.Application.Interfaces;
 using MusicApp.Infrastructure;
+using MusicApp.Infrastructure.Authorization;
 using MusicApp.Infrastructure.Persistence;
 using MusicApp.Web.Infrastructure;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
@@ -30,6 +32,7 @@ builder.Services.Configure<WebJwtOptions>(
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddScoped<IRefreshCookieHelper, RefreshCookieHelper>();
+builder.Services.AddSingleton<IAuthorizationHandler, OwnerOrAdminHandler>();
 
 var jwtOptions = builder.Configuration.GetSection(WebJwtOptions.SectionName)
     .Get<WebJwtOptions>() ?? new WebJwtOptions();
@@ -87,6 +90,11 @@ builder.Services.AddAuthorization(options =>
             .RequireClaim("is_active", "True")
             .RequireAssertion(ctx =>
                 !ctx.User.HasClaim("role", "Admin")));
+
+    options.AddPolicy("OwnerOrAdmin", policy =>
+        policy.RequireAuthenticatedUser()
+            .RequireClaim("is_active", "True")
+            .AddRequirements(new OwnerOrAdminRequirement()));
 });
 
 builder.Services.AddFluentValidationAutoValidation();
@@ -101,10 +109,6 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
-app.UseAuthentication();
-app.UseAuthorization();
-
 using (var scope = app.Services.CreateScope())
 {
     var sessionRepository = scope.ServiceProvider.GetRequiredService<ISessionRepository>();
@@ -116,6 +120,10 @@ using (var scope = app.Services.CreateScope())
     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     await DbSeeder.SeedAsync(context);
 }
+
+app.UseHttpsRedirection();
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 app.MapRazorPages();

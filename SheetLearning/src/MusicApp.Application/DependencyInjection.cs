@@ -2,6 +2,7 @@ using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using MusicApp.Application.UseCases.Auth;
 using MusicApp.Application.UseCases.Exercises;
+using MusicApp.Application.UseCases.Forum;
 using MusicApp.Application.UseCases.Users;
 using MusicApp.Application.Validators;
 
@@ -33,6 +34,18 @@ public static class DependencyInjection
         services.AddScoped<SaveAttemptHandler>();
         services.AddScoped<GetMyBestScoresHandler>();
         services.AddScoped<GetMyAttemptsHandler>();
+
+        services.AddScoped<GetPostsHandler>();
+        services.AddScoped<GetPostDetailHandler>();
+        services.AddScoped<CreatePostHandler>();
+        services.AddScoped<UpdatePostHandler>();
+        services.AddScoped<DeletePostHandler>();
+        services.AddScoped<GetCommentsHandler>();
+        services.AddScoped<CreateCommentHandler>();
+        services.AddScoped<UpdateCommentHandler>();
+        services.AddScoped<DeleteCommentHandler>();
+        services.AddScoped<UpsertVoteHandler>();
+        services.AddScoped<RemoveVoteHandler>();
 
         return services;
     }

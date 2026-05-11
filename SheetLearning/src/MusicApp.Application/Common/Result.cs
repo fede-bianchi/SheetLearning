@@ -45,4 +45,13 @@ public static class ErrorCodes
     public const string AttemptNotFound = "ATTEMPT_NOT_FOUND";
     public const string InvalidDifficolta = "INVALID_DIFFICOLTA";
     public const string InvalidPunteggio = "INVALID_PUNTEGGIO";
+
+    // Phase 3
+    public const string PostNotFound = "POST_NOT_FOUND";
+    public const string CommentNotFound = "COMMENT_NOT_FOUND";
+    public const string PostDeleted = "POST_DELETED";
+    public const string CommentDeleted = "COMMENT_DELETED";
+    public const string Forbidden = "FORBIDDEN";
+    public const string VoteTargetNotFound = "VOTE_TARGET_NOT_FOUND";
+    public const string InvalidTargetType = "INVALID_TARGET_TYPE";
 }
