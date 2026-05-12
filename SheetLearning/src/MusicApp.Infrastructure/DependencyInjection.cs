@@ -4,6 +4,7 @@ using MusicApp.Application.Interfaces;
 using MusicApp.Infrastructure.Persistence;
 using MusicApp.Infrastructure.Repositories;
 using MusicApp.Infrastructure.Security;
+using MusicApp.Infrastructure.Services;
 
 namespace MusicApp.Infrastructure;
 
@@ -35,6 +36,11 @@ public static class DependencyInjection
         services.AddScoped<ILessonBundleRepository, LessonBundleRepository>();
         services.AddScoped<ILessonBundlePurchaseRepository, LessonBundlePurchaseRepository>();
         services.AddScoped<ILessonRatingRepository, LessonRatingRepository>();
+
+        // Phase 5
+        services.AddScoped<IPaymentRepository, PaymentRepository>();
+        services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+        services.AddScoped<IStripeService, StripeService>();
 
         return services;
     }

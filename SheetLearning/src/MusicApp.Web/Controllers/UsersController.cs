@@ -6,6 +6,7 @@ using MusicApp.Application.DTOs;
 using MusicApp.Application.Interfaces;
 using MusicApp.Application.UseCases.Bundles;
 using MusicApp.Application.UseCases.Exercises;
+using MusicApp.Application.UseCases.Payments;
 using MusicApp.Application.UseCases.Users;
 using MusicApp.Web.Models;
 
@@ -24,6 +25,8 @@ public class UsersController : ControllerBase
     private readonly GetMyBestScoresHandler _getMyBestScoresHandler;
     private readonly GetMyAttemptsHandler _getMyAttemptsHandler;
     private readonly GetMyBundlePurchasesHandler _getMyBundlePurchasesHandler;
+    private readonly GetMySubscriptionHandler _getMySubscriptionHandler;
+    private readonly GetMyPaymentsHandler _getMyPaymentsHandler;
     private readonly IRefreshCookieHelper _refreshCookieHelper;
 
     public UsersController(
@@ -36,6 +39,8 @@ public class UsersController : ControllerBase
         GetMyBestScoresHandler getMyBestScoresHandler,
         GetMyAttemptsHandler getMyAttemptsHandler,
         GetMyBundlePurchasesHandler getMyBundlePurchasesHandler,
+        GetMySubscriptionHandler getMySubscriptionHandler,
+        GetMyPaymentsHandler getMyPaymentsHandler,
         IRefreshCookieHelper refreshCookieHelper)
     {
         _getMyProfileHandler = getMyProfileHandler;
@@ -47,6 +52,8 @@ public class UsersController : ControllerBase
         _getMyBestScoresHandler = getMyBestScoresHandler;
         _getMyAttemptsHandler = getMyAttemptsHandler;
         _getMyBundlePurchasesHandler = getMyBundlePurchasesHandler;
+        _getMySubscriptionHandler = getMySubscriptionHandler;
+        _getMyPaymentsHandler = getMyPaymentsHandler;
         _refreshCookieHelper = refreshCookieHelper;
     }
 
@@ -231,6 +238,39 @@ public class UsersController : ControllerBase
     {
         var userId = GetCurrentUserId();
         var result = await _getMyBundlePurchasesHandler.HandleAsync(userId);
+        return Ok(result.Value);
+    }
+
+    [HttpGet("me/subscription")]
+    [Authorize]
+    public async Task<IActionResult> GetMySubscription()
+    {
+        var userId = GetCurrentUserId();
+        var result = await _getMySubscriptionHandler.HandleAsync(userId);
+
+        if (!result.IsSuccess)
+        {
+            return result.ErrorCode switch
+            {
+                ErrorCodes.NoActiveSubscription => StatusCode(
+                    StatusCodes.Status404NotFound,
+                    new ApiError(result.ErrorCode!, result.ErrorMessage!)),
+                _ => StatusCode(
+                    StatusCodes.Status400BadRequest,
+                    new ApiError(result.ErrorCode ?? "BAD_REQUEST",
+                        result.ErrorMessage ?? "Richiesta non valida."))
+            };
+        }
+
+        return Ok(result.Value);
+    }
+
+    [HttpGet("me/payments")]
+    [Authorize]
+    public async Task<IActionResult> GetMyPayments()
+    {
+        var userId = GetCurrentUserId();
+        var result = await _getMyPaymentsHandler.HandleAsync(userId);
         return Ok(result.Value);
     }
 

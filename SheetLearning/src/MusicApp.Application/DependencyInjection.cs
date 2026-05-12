@@ -5,6 +5,7 @@ using MusicApp.Application.UseCases.Bookings;
 using MusicApp.Application.UseCases.Bundles;
 using MusicApp.Application.UseCases.Exercises;
 using MusicApp.Application.UseCases.Forum;
+using MusicApp.Application.UseCases.Payments;
 using MusicApp.Application.UseCases.Slots;
 using MusicApp.Application.UseCases.Teachers;
 using MusicApp.Application.UseCases.Users;
@@ -76,6 +77,14 @@ public static class DependencyInjection
         // Phase 4 — Bundles
         services.AddScoped<GetActiveBundlesHandler>();
         services.AddScoped<GetMyBundlePurchasesHandler>();
+
+        // Phase 5 — Payments
+        services.AddScoped<CreateProCheckoutHandler>();
+        services.AddScoped<CreateBundleCheckoutHandler>();
+        services.AddScoped<HandleStripeWebhookHandler>();
+        services.AddScoped<GetMySubscriptionHandler>();
+        services.AddScoped<GetMyPaymentsHandler>();
+        services.AddScoped<CancelSubscriptionHandler>();
 
         return services;
     }

@@ -31,6 +31,13 @@ public class LessonBundlePurchaseRepository : ILessonBundlePurchaseRepository
             .FirstOrDefaultAsync(p => p.Id == id);
     }
 
+    public async Task<LessonBundlePurchase> CreateAsync(LessonBundlePurchase purchase)
+    {
+        _context.LessonBundlePurchases.Add(purchase);
+        await _context.SaveChangesAsync();
+        return purchase;
+    }
+
     public async Task<LessonBundlePurchase> UpdateAsync(LessonBundlePurchase purchase)
     {
         _context.LessonBundlePurchases.Update(purchase);

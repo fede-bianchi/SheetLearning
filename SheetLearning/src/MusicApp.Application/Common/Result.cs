@@ -75,4 +75,12 @@ public static class ErrorCodes
     public const string TeacherStudentUnrelated   = "TEACHER_STUDENT_UNRELATED";
     public const string CannotBookOwnSlot         = "CANNOT_BOOK_OWN_SLOT";
     public const string InvalidCategoryCount      = "INVALID_CATEGORY_COUNT";
+
+    // Phase 5
+    public const string BundleNotFoundForCheckout    = "BUNDLE_NOT_FOUND_FOR_CHECKOUT";
+    public const string ActiveSubscriptionExists     = "ACTIVE_SUBSCRIPTION_EXISTS";
+    public const string NoActiveSubscription         = "NO_ACTIVE_SUBSCRIPTION";
+    public const string WebhookSignatureInvalid      = "WEBHOOK_SIGNATURE_INVALID";
+    public const string WebhookEventUnhandled        = "WEBHOOK_EVENT_UNHANDLED";
+    public const string PaymentAlreadyProcessed      = "PAYMENT_ALREADY_PROCESSED";
 }

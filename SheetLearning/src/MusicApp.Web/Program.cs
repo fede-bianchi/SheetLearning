@@ -11,8 +11,12 @@ using MusicApp.Infrastructure;
 using MusicApp.Infrastructure.Authorization;
 using MusicApp.Infrastructure.Persistence;
 using MusicApp.Web.Infrastructure;
+using MusicApp.Web.Options;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using Stripe;
 using ApplicationJwtOptions = MusicApp.Application.Options.JwtOptions;
+using ApplicationPlansOptions = MusicApp.Application.Options.PlansOptions;
+using ApplicationStripeOptions = MusicApp.Application.Options.StripeOptions;
 using WebJwtOptions = MusicApp.Web.Options.JwtOptions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,6 +32,18 @@ builder.Services.Configure<ApplicationJwtOptions>(
 
 builder.Services.Configure<WebJwtOptions>(
     builder.Configuration.GetSection(WebJwtOptions.SectionName));
+
+// Phase 5 — Stripe and Plans options
+builder.Services.Configure<ApplicationStripeOptions>(
+    builder.Configuration.GetSection(ApplicationStripeOptions.SectionName));
+builder.Services.Configure<ApplicationPlansOptions>(
+    builder.Configuration.GetSection(ApplicationPlansOptions.SectionName));
+
+// Phase 5 — Stripe SDK initialization
+var stripeConfig = builder.Configuration
+    .GetSection(ApplicationStripeOptions.SectionName)
+    .Get<ApplicationStripeOptions>()!;
+StripeConfiguration.ApiKey = stripeConfig.SecretKey;
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
@@ -170,6 +186,14 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.UseHttpsRedirection();
+
+// Phase 5 — Enable request body buffering for Stripe webhook raw body reading
+app.Use(async (context, next) =>
+{
+    context.Request.EnableBuffering();
+    await next();
+});
+
 app.UseAuthentication();
 app.UseAuthorization();
 
