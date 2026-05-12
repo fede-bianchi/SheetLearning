@@ -9,14 +9,12 @@ public class CheckoutRequestValidator : AbstractValidator<CheckoutRequest>
     {
         RuleFor(x => x.SuccessUrl)
             .NotEmpty()
-            .Must(url => Uri.TryCreate(url, UriKind.Absolute, out var uriResult)
-                && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps))
+            .Must(url => Uri.IsWellFormedUriString(url, UriKind.Absolute))
             .WithMessage("SuccessUrl must be a valid absolute URL.");
 
         RuleFor(x => x.CancelUrl)
             .NotEmpty()
-            .Must(url => Uri.TryCreate(url, UriKind.Absolute, out var uriResult)
-                && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps))
+            .Must(url => Uri.IsWellFormedUriString(url, UriKind.Absolute))
             .WithMessage("CancelUrl must be a valid absolute URL.");
     }
 }

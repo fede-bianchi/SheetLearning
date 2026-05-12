@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MusicApp.Application.UseCases.Auth;
 using MusicApp.Application.UseCases.Bookings;
 using MusicApp.Application.UseCases.Bundles;
+using MusicApp.Application.UseCases.Chat;
 using MusicApp.Application.UseCases.Exercises;
 using MusicApp.Application.UseCases.Forum;
 using MusicApp.Application.UseCases.Payments;
@@ -85,6 +86,12 @@ public static class DependencyInjection
         services.AddScoped<GetMySubscriptionHandler>();
         services.AddScoped<GetMyPaymentsHandler>();
         services.AddScoped<CancelSubscriptionHandler>();
+
+        // Phase 6 — Chat
+        services.AddScoped<GetMyChatsHandler>();
+        services.AddScoped<GetChatMessagesHandler>();
+        services.AddScoped<SendMessageHandler>();
+        services.AddScoped<MarkMessagesReadHandler>();
 
         return services;
     }

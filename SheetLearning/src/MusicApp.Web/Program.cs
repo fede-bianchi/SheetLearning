@@ -50,6 +50,10 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddScoped<IRefreshCookieHelper, RefreshCookieHelper>();
 builder.Services.AddSingleton<IAuthorizationHandler, OwnerOrAdminHandler>();
 
+// Phase 6 — Chat notification service (Web project, needs SignalR)
+builder.Services.AddScoped<MusicApp.Application.Interfaces.IChatNotificationService,
+                            MusicApp.Web.Services.SignalRChatNotificationService>();
+
 // Phase 4 — authorization handler registrations
 builder.Services.AddSingleton<IAuthorizationHandler, TeacherOwnsSlotHandler>();
 builder.Services.AddSingleton<IAuthorizationHandler, TeacherOwnsBookingHandler>();
@@ -99,6 +103,24 @@ builder.Services
             ValidAudience = jwtOptions.Audience,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.Secret)),
             ClockSkew = TimeSpan.Zero
+        };
+
+        // Phase 6 — Accept JWT from query string for SignalR
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                var accessToken = context.Request.Query["access_token"];
+                var path = context.HttpContext.Request.Path;
+
+                if (!string.IsNullOrEmpty(accessToken)
+                    && path.StartsWithSegments("/hubs/chat"))
+                {
+                    context.Token = accessToken;
+                }
+
+                return Task.CompletedTask;
+            }
         };
     });
 
@@ -165,6 +187,21 @@ builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddRazorPages();
 builder.Services.AddControllers();
 
+// Phase 6 — SignalR
+builder.Services.AddSignalR();
+
+// Phase 6 — CORS for SignalR WebSocket
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("http://localhost:3000")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
+});
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
@@ -187,6 +224,9 @@ using (var scope = app.Services.CreateScope())
 
 app.UseHttpsRedirection();
 
+// Phase 6 — CORS for SignalR WebSocket
+app.UseCors();
+
 // Phase 5 — Enable request body buffering for Stripe webhook raw body reading
 app.Use(async (context, next) =>
 {
@@ -199,5 +239,8 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.MapRazorPages();
+
+// Phase 6 — SignalR hub endpoint
+app.MapHub<MusicApp.Web.Hubs.ChatHub>("/hubs/chat");
 
 app.Run();

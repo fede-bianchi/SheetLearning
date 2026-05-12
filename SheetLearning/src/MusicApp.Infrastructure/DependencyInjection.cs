@@ -42,6 +42,10 @@ public static class DependencyInjection
         services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
         services.AddScoped<IStripeService, StripeService>();
 
+        // Phase 6
+        services.AddScoped<IChatRepository, ChatRepository>();
+        services.AddScoped<IChatMessageRepository, ChatMessageRepository>();
+
         return services;
     }
 }

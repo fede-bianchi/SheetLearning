@@ -83,4 +83,11 @@ public static class ErrorCodes
     public const string WebhookSignatureInvalid      = "WEBHOOK_SIGNATURE_INVALID";
     public const string WebhookEventUnhandled        = "WEBHOOK_EVENT_UNHANDLED";
     public const string PaymentAlreadyProcessed      = "PAYMENT_ALREADY_PROCESSED";
+
+    // Phase 6
+    public const string ChatNotFound          = "CHAT_NOT_FOUND";
+    public const string TeacherNotFound       = "TEACHER_NOT_FOUND";
+    public const string CannotMessageSelf     = "CANNOT_MESSAGE_SELF";
+    public const string MessageContentEmpty   = "MESSAGE_CONTENT_EMPTY";
+    public const string TargetNotATeacher     = "TARGET_NOT_A_TEACHER";
 }
