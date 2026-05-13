@@ -10,15 +10,21 @@ public class CreateBookingHandler
     private readonly ILessonSlotRepository _slotRepository;
     private readonly ILessonBookingRepository _bookingRepository;
     private readonly ILessonBundlePurchaseRepository _bundlePurchaseRepository;
+    private readonly IUserRepository _userRepository;
+    private readonly INotificationService _notificationService;
 
     public CreateBookingHandler(
         ILessonSlotRepository slotRepository,
         ILessonBookingRepository bookingRepository,
-        ILessonBundlePurchaseRepository bundlePurchaseRepository)
+        ILessonBundlePurchaseRepository bundlePurchaseRepository,
+        IUserRepository userRepository,
+        INotificationService notificationService)
     {
         _slotRepository = slotRepository;
         _bookingRepository = bookingRepository;
         _bundlePurchaseRepository = bundlePurchaseRepository;
+        _userRepository = userRepository;
+        _notificationService = notificationService;
     }
 
     public async Task<Result<LessonBookingDto>> HandleAsync(
@@ -88,6 +94,14 @@ public class CreateBookingHandler
         }
 
         var reloaded = await _bookingRepository.GetByIdAsync(booking.Id);
+
+        // Phase 7 — Notification dispatch
+        var teacher = await _userRepository.GetByIdAsync(slot.TeacherId);
+        var student = await _userRepository.GetByIdAsync(studentId);
+
+        _ = _notificationService.SendLezionePropostaAsync(
+            reloaded!,
+            student?.Nickname ?? "Studente");
 
         var dto = new LessonBookingDto(
             reloaded!.Id,

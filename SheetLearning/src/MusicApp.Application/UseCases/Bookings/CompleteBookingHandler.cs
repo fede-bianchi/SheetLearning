@@ -6,10 +6,17 @@ namespace MusicApp.Application.UseCases.Bookings;
 public class CompleteBookingHandler
 {
     private readonly ILessonBookingRepository _bookingRepository;
+    private readonly IUserRepository _userRepository;
+    private readonly INotificationService _notificationService;
 
-    public CompleteBookingHandler(ILessonBookingRepository bookingRepository)
+    public CompleteBookingHandler(
+        ILessonBookingRepository bookingRepository,
+        IUserRepository userRepository,
+        INotificationService notificationService)
     {
         _bookingRepository = bookingRepository;
+        _userRepository = userRepository;
+        _notificationService = notificationService;
     }
 
     public async Task<Result<bool>> HandleAsync(int bookingId)
@@ -27,6 +34,12 @@ public class CompleteBookingHandler
         booking.Stato = "completata";
         booking.UpdatedAt = DateTime.UtcNow;
         await _bookingRepository.UpdateAsync(booking);
+
+        // Phase 7 — Notification dispatch
+        var teacher = await _userRepository.GetByIdAsync(booking.TeacherId);
+        _ = _notificationService.SendLezioneCompletataAsync(
+            booking,
+            teacher?.Nickname ?? "Insegnante");
 
         return Result<bool>.Ok(true);
     }

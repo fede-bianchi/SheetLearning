@@ -54,6 +54,12 @@ builder.Services.AddSingleton<IAuthorizationHandler, OwnerOrAdminHandler>();
 builder.Services.AddScoped<MusicApp.Application.Interfaces.IChatNotificationService,
                             MusicApp.Web.Services.SignalRChatNotificationService>();
 
+// Phase 7 — Notification push service (Web project, needs SignalR)
+builder.Services.AddScoped<INotificationPushService,
+                            MusicApp.Web.Services.SignalRNotificationPushService>();
+
+// TODO: call SendBundleInScadenzaAsync and SendAbbonamentoInScadenzaAsync from background job (Phase 9)
+
 // Phase 4 — authorization handler registrations
 builder.Services.AddSingleton<IAuthorizationHandler, TeacherOwnsSlotHandler>();
 builder.Services.AddSingleton<IAuthorizationHandler, TeacherOwnsBookingHandler>();
@@ -114,7 +120,8 @@ builder.Services
                 var path = context.HttpContext.Request.Path;
 
                 if (!string.IsNullOrEmpty(accessToken)
-                    && path.StartsWithSegments("/hubs/chat"))
+                    && (path.StartsWithSegments("/hubs/chat")
+                     || path.StartsWithSegments("/hubs/notifications")))
                 {
                     context.Token = accessToken;
                 }
@@ -242,5 +249,8 @@ app.MapRazorPages();
 
 // Phase 6 — SignalR hub endpoint
 app.MapHub<MusicApp.Web.Hubs.ChatHub>("/hubs/chat");
+
+// Phase 7 — Notification hub
+app.MapHub<MusicApp.Web.Hubs.NotificationHub>("/hubs/notifications");
 
 app.Run();

@@ -15,6 +15,7 @@ public class SaveAttemptHandler
     private readonly IBestScoreRepository _bestScoreRepository;
     private readonly IUserLevelProgressRepository _userLevelProgressRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly INotificationService _notificationService;
 
     public SaveAttemptHandler(
         IExerciseTypeRepository exerciseTypeRepository,
@@ -22,7 +23,8 @@ public class SaveAttemptHandler
         IAttemptRepository attemptRepository,
         IBestScoreRepository bestScoreRepository,
         IUserLevelProgressRepository userLevelProgressRepository,
-        IUnitOfWork unitOfWork)
+        IUnitOfWork unitOfWork,
+        INotificationService notificationService)
     {
         _exerciseTypeRepository = exerciseTypeRepository;
         _levelRepository = levelRepository;
@@ -30,6 +32,7 @@ public class SaveAttemptHandler
         _bestScoreRepository = bestScoreRepository;
         _userLevelProgressRepository = userLevelProgressRepository;
         _unitOfWork = unitOfWork;
+        _notificationService = notificationService;
     }
 
     public async Task<Result<AttemptResultDto>> HandleAsync(int userId, CreateAttemptRequest request)
@@ -141,6 +144,15 @@ public class SaveAttemptHandler
                 isNewRecord = true;
             }
 
+            // Phase 7 — Notification dispatch
+            if (isNewRecord)
+            {
+                _ = _notificationService.SendRecordBattuoAsync(
+                    userId,
+                    exerciseType.Nome,
+                    attempt.Punteggio);
+            }
+
             LevelDto? livelloSbloccato = null;
             int? punteggioMinimoSuccessivo = null;
 
@@ -174,6 +186,13 @@ public class SaveAttemptHandler
                         });
 
                         livelloSbloccato = nextLevel.ToLevelDto();
+
+                        // Phase 7 — Notification dispatch
+                        _ = _notificationService.SendLivelloSbloccatoAsync(
+                            userId,
+                            nextLevel.Nome,
+                            exerciseType.Nome,
+                            nextLevel.Id);
                     }
                 }
             }

@@ -32,3 +32,33 @@ Auth: JWT passed as query parameter: ?access_token={token}
   letto: boolean,
   createdAt: string (ISO 8601)
 }
+---
+
+## NotificationHub
+
+URL: /hubs/notifications
+Auth: JWT passed as query parameter: ?access_token={token}
+
+## Client → Server methods
+None. This hub is server-push only.
+
+## Server → Client events
+
+| Event | Payload | Description |
+|---|---|---|
+| ReceiveNotification | NotificationDto | A new notification was created |
+| UnreadCountUpdated  | count: number   | Updated unread notification count |
+
+## NotificationDto shape
+{
+  id: number,
+  tipo: string,
+  titolo: string,
+  corpo: string | null,
+  targetType: string | null,
+  targetId: number | null,
+  isRead: boolean,
+  isArchived: boolean,
+  createdAt: string (ISO 8601),
+  readAt: string | null (ISO 8601)
+}

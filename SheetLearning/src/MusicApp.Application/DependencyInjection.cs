@@ -6,6 +6,7 @@ using MusicApp.Application.UseCases.Bundles;
 using MusicApp.Application.UseCases.Chat;
 using MusicApp.Application.UseCases.Exercises;
 using MusicApp.Application.UseCases.Forum;
+using MusicApp.Application.UseCases.Notifications;
 using MusicApp.Application.UseCases.Payments;
 using MusicApp.Application.UseCases.Slots;
 using MusicApp.Application.UseCases.Teachers;
@@ -92,6 +93,13 @@ public static class DependencyInjection
         services.AddScoped<GetChatMessagesHandler>();
         services.AddScoped<SendMessageHandler>();
         services.AddScoped<MarkMessagesReadHandler>();
+
+        // Phase 7 — Notifications
+        services.AddScoped<GetMyNotificationsHandler>();
+        services.AddScoped<MarkNotificationReadHandler>();
+        services.AddScoped<MarkAllNotificationsReadHandler>();
+        services.AddScoped<ArchiveNotificationHandler>();
+        services.AddScoped<GetUnreadCountHandler>();
 
         return services;
     }

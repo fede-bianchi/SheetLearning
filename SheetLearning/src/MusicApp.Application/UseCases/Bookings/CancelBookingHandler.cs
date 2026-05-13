@@ -9,15 +9,18 @@ public class CancelBookingHandler
     private readonly ILessonBookingRepository _bookingRepository;
     private readonly ILessonSlotRepository _slotRepository;
     private readonly ILessonBundlePurchaseRepository _bundlePurchaseRepository;
+    private readonly INotificationService _notificationService;
 
     public CancelBookingHandler(
         ILessonBookingRepository bookingRepository,
         ILessonSlotRepository slotRepository,
-        ILessonBundlePurchaseRepository bundlePurchaseRepository)
+        ILessonBundlePurchaseRepository bundlePurchaseRepository,
+        INotificationService notificationService)
     {
         _bookingRepository = bookingRepository;
         _slotRepository = slotRepository;
         _bundlePurchaseRepository = bundlePurchaseRepository;
+        _notificationService = notificationService;
     }
 
     public async Task<Result<bool>> HandleAsync(
@@ -67,6 +70,12 @@ public class CancelBookingHandler
         }
 
         await _bookingRepository.UpdateAsync(booking);
+
+        // Phase 7 — Notification dispatch
+        _ = _notificationService.SendLezioneCancellataAsync(
+            booking,
+            cancellerId);
+
         return Result<bool>.Ok(true);
     }
 }

@@ -7,10 +7,17 @@ namespace MusicApp.Application.UseCases.Bookings;
 public class ConfirmBookingHandler
 {
     private readonly ILessonBookingRepository _bookingRepository;
+    private readonly IUserRepository _userRepository;
+    private readonly INotificationService _notificationService;
 
-    public ConfirmBookingHandler(ILessonBookingRepository bookingRepository)
+    public ConfirmBookingHandler(
+        ILessonBookingRepository bookingRepository,
+        IUserRepository userRepository,
+        INotificationService notificationService)
     {
         _bookingRepository = bookingRepository;
+        _userRepository = userRepository;
+        _notificationService = notificationService;
     }
 
     public async Task<Result<LessonBookingDto>> HandleAsync(int bookingId)
@@ -28,6 +35,12 @@ public class ConfirmBookingHandler
         booking.Stato = "confermata";
         booking.UpdatedAt = DateTime.UtcNow;
         await _bookingRepository.UpdateAsync(booking);
+
+        // Phase 7 — Notification dispatch
+        var teacher = await _userRepository.GetByIdAsync(booking.TeacherId);
+        _ = _notificationService.SendLezioneConfermataAsync(
+            booking,
+            teacher?.Nickname ?? "Insegnante");
 
         var dto = new LessonBookingDto(
             booking.Id,

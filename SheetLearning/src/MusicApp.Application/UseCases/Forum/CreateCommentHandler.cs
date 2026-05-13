@@ -9,13 +9,19 @@ public class CreateCommentHandler
 {
     private readonly ICommentRepository _commentRepository;
     private readonly IPostRepository _postRepository;
+    private readonly IUserRepository _userRepository;
+    private readonly INotificationService _notificationService;
 
     public CreateCommentHandler(
         ICommentRepository commentRepository,
-        IPostRepository postRepository)
+        IPostRepository postRepository,
+        IUserRepository userRepository,
+        INotificationService notificationService)
     {
         _commentRepository = commentRepository;
         _postRepository = postRepository;
+        _userRepository = userRepository;
+        _notificationService = notificationService;
     }
 
     public async Task<Result<CommentDto>> HandleAsync(int userId, int postId, CreateCommentRequest request)
@@ -65,6 +71,24 @@ public class CreateCommentHandler
         if (createdWithAuthor is null)
         {
             return Result<CommentDto>.Fail(ErrorCodes.CommentNotFound, "Commento non trovato.");
+        }
+
+        // Phase 7 — Notification dispatch
+        var commenter = await _userRepository.GetByIdAsync(userId);
+        var nickname = commenter?.Nickname ?? "Utente";
+
+        _ = _notificationService.SendPostRispostaAsync(
+            comment, nickname, post.UserId);
+
+        if (request.ParentCommentId.HasValue)
+        {
+            var parentComment = await _commentRepository
+                .GetByIdAsync(request.ParentCommentId.Value);
+            if (parentComment != null)
+            {
+                _ = _notificationService.SendCommentoRispostaAsync(
+                    comment, nickname, parentComment.UserId);
+            }
         }
 
         return Result<CommentDto>.Ok(createdWithAuthor.ToCommentDto(

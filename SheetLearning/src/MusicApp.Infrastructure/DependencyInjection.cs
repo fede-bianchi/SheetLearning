@@ -46,6 +46,10 @@ public static class DependencyInjection
         services.AddScoped<IChatRepository, ChatRepository>();
         services.AddScoped<IChatMessageRepository, ChatMessageRepository>();
 
+        // Phase 7
+        services.AddScoped<INotificationRepository, NotificationRepository>();
+        services.AddScoped<INotificationService, NotificationService>();
+
         return services;
     }
 }

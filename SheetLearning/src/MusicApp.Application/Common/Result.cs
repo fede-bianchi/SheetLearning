@@ -90,4 +90,8 @@ public static class ErrorCodes
     public const string CannotMessageSelf     = "CANNOT_MESSAGE_SELF";
     public const string MessageContentEmpty   = "MESSAGE_CONTENT_EMPTY";
     public const string TargetNotATeacher     = "TARGET_NOT_A_TEACHER";
+
+    // Phase 7
+    public const string NotificationNotFound = "NOTIFICATION_NOT_FOUND";
+    public const string NotificationArchived = "NOTIFICATION_ARCHIVED";
 }

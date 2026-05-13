@@ -10,17 +10,20 @@ public class SendMessageHandler
     private readonly IChatRepository _chatRepo;
     private readonly IChatMessageRepository _messageRepo;
     private readonly IUserRepository _userRepo;
-    private readonly IChatNotificationService _notificationService;
+    private readonly IChatNotificationService _chatNotificationService;
+    private readonly INotificationService _notificationService;
 
     public SendMessageHandler(
         IChatRepository chatRepo,
         IChatMessageRepository messageRepo,
         IUserRepository userRepo,
-        IChatNotificationService notificationService)
+        IChatNotificationService chatNotificationService,
+        INotificationService notificationService)
     {
         _chatRepo = chatRepo;
         _messageRepo = messageRepo;
         _userRepo = userRepo;
+        _chatNotificationService = chatNotificationService;
         _notificationService = notificationService;
     }
 
@@ -77,7 +80,14 @@ public class SendMessageHandler
             CreatedAt: message.CreatedAt
         );
 
-        _ = _notificationService.NotifyNewMessageAsync(recipientId, dto);
+        _ = _chatNotificationService.NotifyNewMessageAsync(recipientId, dto);
+
+        // Phase 7 — Persistent notification dispatch
+        _ = _notificationService.SendMessaggioRicevutoAsync(
+            recipientId,
+            sender!.Nickname,
+            message.Contenuto,
+            chat.Id);
 
         return Result<ChatMessageDto>.Ok(dto);
     }
