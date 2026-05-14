@@ -8,13 +8,16 @@ public class GetPostsHandler
 {
     private readonly IPostRepository _postRepository;
     private readonly IVoteRepository _voteRepository;
+    private readonly ICommentRepository _commentRepo;
 
     public GetPostsHandler(
         IPostRepository postRepository,
-        IVoteRepository voteRepository)
+        IVoteRepository voteRepository,
+        ICommentRepository commentRepo)
     {
         _postRepository = postRepository;
         _voteRepository = voteRepository;
+        _commentRepo = commentRepo;
     }
 
     public async Task<Result<PostListResponse>> HandleAsync(PostListQuery query, int? currentUserId)
@@ -34,6 +37,10 @@ public class GetPostsHandler
             ? await _voteRepository.GetUserVotesBatchAsync(currentUserId.Value, "post", postIds)
             : new Dictionary<int, string>();
 
+        var commentCounts = postIds.Count > 0
+            ? await _commentRepo.GetCountBatchAsync(postIds)
+            : new Dictionary<int, int>();
+
         var postDtos = posts
             .Select(post =>
             {
@@ -47,7 +54,7 @@ public class GetPostsHandler
                     counts.Upvotes,
                     counts.Downvotes,
                     userVote,
-                    commentCount: 0);
+                    commentCount: commentCounts.TryGetValue(post.Id, out var cc) ? cc : 0);
             })
             .ToList();
 

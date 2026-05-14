@@ -1,3 +1,4 @@
+using MusicApp.Application.Caching;
 using MusicApp.Application.Common;
 using MusicApp.Application.DTOs;
 using MusicApp.Application.Interfaces;
@@ -16,6 +17,7 @@ public class SaveAttemptHandler
     private readonly IUserLevelProgressRepository _userLevelProgressRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly INotificationService _notificationService;
+    private readonly ICacheService _cache;
 
     public SaveAttemptHandler(
         IExerciseTypeRepository exerciseTypeRepository,
@@ -24,7 +26,8 @@ public class SaveAttemptHandler
         IBestScoreRepository bestScoreRepository,
         IUserLevelProgressRepository userLevelProgressRepository,
         IUnitOfWork unitOfWork,
-        INotificationService notificationService)
+        INotificationService notificationService,
+        ICacheService cache)
     {
         _exerciseTypeRepository = exerciseTypeRepository;
         _levelRepository = levelRepository;
@@ -33,6 +36,7 @@ public class SaveAttemptHandler
         _userLevelProgressRepository = userLevelProgressRepository;
         _unitOfWork = unitOfWork;
         _notificationService = notificationService;
+        _cache = cache;
     }
 
     public async Task<Result<AttemptResultDto>> HandleAsync(int userId, CreateAttemptRequest request)
@@ -193,6 +197,9 @@ public class SaveAttemptHandler
                             nextLevel.Nome,
                             exerciseType.Nome,
                             nextLevel.Id);
+
+                        // Phase 9 — Cache invalidation
+                        _cache.Invalidate(CacheKeys.UserLevels(userId));
                     }
                 }
             }

@@ -1,3 +1,4 @@
+using MusicApp.Application.Caching;
 using MusicApp.Application.Common;
 using MusicApp.Application.DTOs;
 using MusicApp.Application.Interfaces;
@@ -8,10 +9,14 @@ namespace MusicApp.Application.UseCases.Admin;
 public class CreateBundleHandler
 {
     private readonly ILessonBundleRepository _bundleRepository;
+    private readonly ICacheService _cache;
 
-    public CreateBundleHandler(ILessonBundleRepository bundleRepository)
+    public CreateBundleHandler(
+        ILessonBundleRepository bundleRepository,
+        ICacheService cache)
     {
         _bundleRepository = bundleRepository;
+        _cache = cache;
     }
 
     public async Task<Result<LessonBundleDto>> HandleAsync(CreateBundleRequest request)
@@ -27,14 +32,11 @@ public class CreateBundleHandler
             CreatedAt         = DateTime.UtcNow
         });
 
+        _cache.Invalidate(CacheKeys.ActiveBundles);
+
         return Result<LessonBundleDto>.Ok(new LessonBundleDto(
-            bundle.Id,
-            bundle.Nome,
-            bundle.NumeroLezioni,
-            bundle.Prezzo,
-            bundle.ScontoPercentuale,
-            bundle.IsActive,
-            bundle.ExpiresAfterDays
+            bundle.Id, bundle.Nome, bundle.NumeroLezioni, bundle.Prezzo,
+            bundle.ScontoPercentuale, bundle.IsActive, bundle.ExpiresAfterDays
         ));
     }
 }

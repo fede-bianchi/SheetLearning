@@ -1,3 +1,4 @@
+using MusicApp.Application.DTOs;
 using MusicApp.Domain.Entities;
 
 namespace MusicApp.Application.Interfaces;
@@ -13,4 +14,8 @@ public interface IAttemptRepository
         IEnumerable<int> protectedAttemptIds,
         int excessCount);
     Task DeleteByIdsAsync(IEnumerable<int> ids);
+
+    // Phase 9
+    Task<IReadOnlyList<FsrsElementStatDto>> GetFsrsAnalyticsAsync(
+        int userId, int exerciseTypeId);
 }

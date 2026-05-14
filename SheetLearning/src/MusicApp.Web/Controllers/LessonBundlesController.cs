@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using MusicApp.Application.UseCases.Bundles;
 
 namespace MusicApp.Web.Controllers;
 
 [ApiController]
 [Route("api/lesson-bundles")]
+[EnableRateLimiting("GeneralPolicy")]
 public class LessonBundlesController : ControllerBase
 {
     private readonly GetActiveBundlesHandler _getActiveBundlesHandler;

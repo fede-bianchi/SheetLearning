@@ -69,4 +69,19 @@ public class CommentRepository : ICommentRepository
         _context.Comments.Update(comment);
         await _context.SaveChangesAsync();
     }
+
+    public async Task<Dictionary<int, int>> GetCountBatchAsync(
+        IEnumerable<int> postIds)
+    {
+        var ids = postIds.ToList();
+        var counts = await _context.Comments
+            .Where(c => ids.Contains(c.PostId) && !c.IsDeleted)
+            .GroupBy(c => c.PostId)
+            .Select(g => new { PostId = g.Key, Count = g.Count() })
+            .ToListAsync();
+
+        return ids.ToDictionary(
+            id => id,
+            id => counts.FirstOrDefault(c => c.PostId == id)?.Count ?? 0);
+    }
 }

@@ -48,5 +48,8 @@ public class ChatMessageConfiguration : IEntityTypeConfiguration<ChatMessage>
             .WithMany()
             .HasForeignKey(e => e.SenderId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasIndex(m => new { m.ChatId, m.CreatedAt })
+              .HasDatabaseName("IX_ChatMessages_ChatCreated");
     }
 }

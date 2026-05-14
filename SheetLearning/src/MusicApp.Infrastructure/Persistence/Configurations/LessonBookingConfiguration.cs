@@ -75,5 +75,11 @@ public class LessonBookingConfiguration : IEntityTypeConfiguration<LessonBooking
             .WithMany()
             .HasForeignKey(e => e.BundlePurchaseId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasIndex(b => new { b.TeacherId, b.Stato })
+              .HasDatabaseName("IX_LessonBookings_TeacherStato");
+
+        builder.HasIndex(b => new { b.StudentId, b.Stato })
+              .HasDatabaseName("IX_LessonBookings_StudentStato");
     }
 }

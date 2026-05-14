@@ -72,5 +72,8 @@ public class AttemptConfiguration : IEntityTypeConfiguration<Attempt>
             .WithMany()
             .HasForeignKey(e => e.LevelId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasIndex(a => new { a.UserId, a.ExerciseTypeId, a.CreatedAt })
+              .HasDatabaseName("IX_Attempts_UserExerciseCreated");
     }
 }

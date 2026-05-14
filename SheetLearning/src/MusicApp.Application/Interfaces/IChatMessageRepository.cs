@@ -10,4 +10,9 @@ public interface IChatMessageRepository
     Task<ChatMessage?> GetLastMessageAsync(int chatId);
     Task<int> GetUnreadCountAsync(int chatId, int excludeUserId);
     Task<int> MarkAllReadAsync(int chatId, int excludeUserId);
+
+    Task<Dictionary<int, int>> GetUnreadCountBatchAsync(
+        IEnumerable<int> chatIds, int excludeUserId);
+    Task<Dictionary<int, string?>> GetLastMessageBatchAsync(
+        IEnumerable<int> chatIds);
 }

@@ -1,18 +1,28 @@
+using System.Threading.RateLimiting;
 using System.Text;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.IdentityModel.Tokens;
 using MusicApp.Application;
 using MusicApp.Application.Authorization;
+using MusicApp.Application.Caching;
 using MusicApp.Application.Interfaces;
 using MusicApp.Infrastructure;
 using MusicApp.Infrastructure.Authorization;
+using MusicApp.Infrastructure.BackgroundJobs;
+using MusicApp.Infrastructure.Caching;
 using MusicApp.Infrastructure.Persistence;
 using MusicApp.Web.Infrastructure;
+using MusicApp.Web.Middleware;
+using MusicApp.Web.Models;
 using MusicApp.Web.Options;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using StackExchange.Redis;
 using Stripe;
 using ApplicationJwtOptions = MusicApp.Application.Options.JwtOptions;
 using ApplicationPlansOptions = MusicApp.Application.Options.PlansOptions;
@@ -58,7 +68,9 @@ builder.Services.AddScoped<MusicApp.Application.Interfaces.IChatNotificationServ
 builder.Services.AddScoped<INotificationPushService,
                             MusicApp.Web.Services.SignalRNotificationPushService>();
 
-// TODO: call SendBundleInScadenzaAsync and SendAbbonamentoInScadenzaAsync from background job (Phase 9)
+// Phase 9 — Background jobs (replaces TODO from Phase 7)
+builder.Services.AddHostedService<SubscriptionExpiryJob>();
+builder.Services.AddHostedService<BundleExpiryJob>();
 
 // Phase 4 — authorization handler registrations
 builder.Services.AddSingleton<IAuthorizationHandler, TeacherOwnsSlotHandler>();
@@ -201,7 +213,21 @@ builder.Services.AddRazorPages();
 builder.Services.AddControllers();
 
 // Phase 6 — SignalR
-builder.Services.AddSignalR();
+var redisConnection = builder.Configuration["Redis:ConnectionString"];
+
+if (!string.IsNullOrEmpty(redisConnection))
+{
+    builder.Services.AddSignalR()
+        .AddStackExchangeRedis(redisConnection, options =>
+        {
+            options.Configuration.ChannelPrefix =
+                RedisChannel.Literal("MusicApp");
+        });
+}
+else
+{
+    builder.Services.AddSignalR();
+}
 
 // Phase 6 — CORS for SignalR WebSocket
 builder.Services.AddCors(options =>
@@ -215,11 +241,52 @@ builder.Services.AddCors(options =>
     });
 });
 
+// Phase 9 — Rate limiting
+builder.Services.AddRateLimiter(options =>
+{
+    options.AddFixedWindowLimiter("AuthPolicy", limiterOptions =>
+    {
+        limiterOptions.PermitLimit           = 10;
+        limiterOptions.Window                = TimeSpan.FromMinutes(1);
+        limiterOptions.QueueProcessingOrder  = QueueProcessingOrder.OldestFirst;
+        limiterOptions.QueueLimit            = 0;
+    });
+
+    options.AddFixedWindowLimiter("GeneralPolicy", limiterOptions =>
+    {
+        limiterOptions.PermitLimit = 30;
+        limiterOptions.Window      = TimeSpan.FromMinutes(1);
+        limiterOptions.QueueLimit  = 0;
+    });
+
+    options.OnRejected = async (context, _) =>
+    {
+        context.HttpContext.Response.StatusCode = 429;
+        await context.HttpContext.Response.WriteAsJsonAsync(
+            new ApiError("RATE_LIMIT_EXCEEDED",
+                "Too many requests. Please try again in a moment."));
+    };
+});
+
+// Phase 9 — Caching
+builder.Services.AddMemoryCache();
+builder.Services.AddSingleton<ICacheService, MemoryCacheService>();
+
+// Phase 9 — Global exception handler
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
+
+// Phase 9 — Health checks
+builder.Services.AddHealthChecks()
+    .AddCheck("self", () => HealthCheckResult.Healthy());
+
 var app = builder.Build();
+
+// Phase 9 — Global exception handler (must be first)
+app.UseExceptionHandler();
 
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
 
@@ -247,6 +314,9 @@ app.Use(async (context, next) =>
     await next();
 });
 
+// Phase 9 — Rate limiting (after routing, before auth)
+app.UseRateLimiter();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -258,5 +328,26 @@ app.MapHub<MusicApp.Web.Hubs.ChatHub>("/hubs/chat");
 
 // Phase 7 — Notification hub
 app.MapHub<MusicApp.Web.Hubs.NotificationHub>("/hubs/notifications");
+
+// Phase 9 — Health check endpoint
+app.MapHealthChecks("/health", new HealthCheckOptions
+{
+    ResponseWriter = async (context, report) =>
+    {
+        context.Response.ContentType = "application/json";
+        await context.Response.WriteAsJsonAsync(new
+        {
+            status   = report.Status.ToString(),
+            duration = report.TotalDuration.TotalMilliseconds,
+            checks   = report.Entries.Select(e => new
+            {
+                name     = e.Key,
+                status   = e.Value.Status.ToString(),
+                duration = e.Value.Duration.TotalMilliseconds,
+                error    = e.Value.Exception?.Message
+            })
+        });
+    }
+});
 
 app.Run();

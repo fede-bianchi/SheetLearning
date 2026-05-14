@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using MusicApp.Application.Common;
 using MusicApp.Application.DTOs;
 using MusicApp.Application.UseCases.Notifications;
@@ -10,6 +11,7 @@ namespace MusicApp.Web.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[EnableRateLimiting("GeneralPolicy")]
 public class NotificationsController : ControllerBase
 {
     private readonly GetMyNotificationsHandler _getMyNotificationsHandler;

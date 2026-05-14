@@ -13,4 +13,6 @@ public interface ICommentRepository
     Task<Comment> CreateAsync(Comment comment);
     Task<Comment> UpdateAsync(Comment comment);
     Task SoftDeleteAsync(Comment comment);
+
+    Task<Dictionary<int, int>> GetCountBatchAsync(IEnumerable<int> postIds);
 }

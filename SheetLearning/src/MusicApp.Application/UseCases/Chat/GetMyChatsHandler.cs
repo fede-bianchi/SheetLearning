@@ -21,24 +21,26 @@ public class GetMyChatsHandler
     {
         var chats = await _chatRepo.GetByUserAsync(userId);
 
-        var dtos = new List<ChatSummaryDto>();
-        foreach (var chat in chats)
-        {
-            var unread = await _messageRepo.GetUnreadCountAsync(chat.Id, userId);
-            var lastMsg = await _messageRepo.GetLastMessageAsync(chat.Id);
+        var chatIds = chats.Select(c => c.Id).ToList();
 
-            dtos.Add(new ChatSummaryDto(
-                chat.Id,
-                chat.StudentId,
-                chat.Student?.Nickname ?? string.Empty,
-                chat.TeacherId,
-                chat.Teacher?.Nickname ?? string.Empty,
-                unread,
-                lastMsg?.Contenuto,
-                chat.LastMessageAt,
-                chat.CreatedAt
-            ));
-        }
+        var unreadCounts = chatIds.Count > 0
+            ? await _messageRepo.GetUnreadCountBatchAsync(chatIds, userId)
+            : new Dictionary<int, int>();
+        var lastMessages = chatIds.Count > 0
+            ? await _messageRepo.GetLastMessageBatchAsync(chatIds)
+            : new Dictionary<int, string?>();
+
+        var dtos = chats.Select(chat => new ChatSummaryDto(
+            chat.Id,
+            chat.StudentId,
+            chat.Student?.Nickname ?? string.Empty,
+            chat.TeacherId,
+            chat.Teacher?.Nickname ?? string.Empty,
+            unreadCounts.GetValueOrDefault(chat.Id, 0),
+            lastMessages.GetValueOrDefault(chat.Id),
+            chat.LastMessageAt,
+            chat.CreatedAt
+        )).ToList();
 
         return Result<IReadOnlyList<ChatSummaryDto>>.Ok(dtos);
     }

@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using MusicApp.Application.Common;
 using MusicApp.Application.DTOs;
 using MusicApp.Application.Interfaces;
@@ -10,6 +11,7 @@ using MusicApp.Web.Models;
 namespace MusicApp.Web.Controllers;
 
 [ApiController]
+[EnableRateLimiting("GeneralPolicy")]
 public class CommentsController : ControllerBase
 {
     private readonly GetCommentsHandler _getCommentsHandler;

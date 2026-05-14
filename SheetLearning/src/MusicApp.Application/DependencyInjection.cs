@@ -122,6 +122,10 @@ public static class DependencyInjection
         services.AddScoped<UpdateBundleHandler>();
         services.AddScoped<ToggleBundleHandler>();
 
+        // Phase 9 — Optimization handlers
+        services.AddScoped<GetFsrsAnalyticsHandler>();
+        services.AddScoped<GetLevelCompletionStatsHandler>();
+
         return services;
     }
 }

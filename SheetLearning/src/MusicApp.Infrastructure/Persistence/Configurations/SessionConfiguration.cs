@@ -44,6 +44,9 @@ public class SessionConfiguration : IEntityTypeConfiguration<Session>
         builder.HasIndex(e => e.Token)
             .IsUnique();
 
+        builder.HasIndex(s => new { s.UserId, s.ExpiresAt })
+              .HasDatabaseName("IX_Sessions_UserExpiry");
+
         builder.HasOne(e => e.User)
             .WithMany()
             .HasForeignKey(e => e.UserId)

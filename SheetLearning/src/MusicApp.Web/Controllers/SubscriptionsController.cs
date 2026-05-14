@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using MusicApp.Application.Common;
 using MusicApp.Application.UseCases.Payments;
 using MusicApp.Web.Models;
@@ -9,6 +10,7 @@ namespace MusicApp.Web.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[EnableRateLimiting("GeneralPolicy")]
 public class SubscriptionsController : ControllerBase
 {
     private readonly CancelSubscriptionHandler _cancelSubscriptionHandler;

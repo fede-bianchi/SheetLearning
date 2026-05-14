@@ -29,14 +29,14 @@ public class HandleStripeWebhookHandler
 
     public async Task<Result<bool>> HandleAsync(Stripe.Event stripeEvent)
     {
-        if (stripeEvent.Type != "checkout.session.completed")
-            return Result<bool>.Ok(true);
-
-        var session = stripeEvent.Data.Object as Stripe.Checkout.Session;
-        if (session == null)
-            return Result<bool>.Ok(true);
-
-        return await HandleCheckoutCompletedAsync(session);
+        return stripeEvent.Type switch
+        {
+            "checkout.session.completed" => await HandleCheckoutCompletedAsync(
+                stripeEvent.Data.Object as Stripe.Checkout.Session),
+            "checkout.session.expired"   => await HandleCheckoutExpiredAsync(
+                stripeEvent.Data.Object as Stripe.Checkout.Session),
+            _                            => Result<bool>.Ok(true)
+        };
     }
 
     private async Task<Result<bool>> HandleCheckoutCompletedAsync(
@@ -107,6 +107,24 @@ public class HandleStripeWebhookHandler
                     ExpiresAt = expiresAt
                 });
         }
+
+        return Result<bool>.Ok(true);
+    }
+
+    private async Task<Result<bool>> HandleCheckoutExpiredAsync(
+        Stripe.Checkout.Session? session)
+    {
+        if (session == null) return Result<bool>.Ok(true);
+
+        var payment = await _paymentRepo
+            .GetByReferimentoEsternoAsync(session.Id);
+
+        if (payment == null)          return Result<bool>.Ok(true);
+        if (payment.Stato != "pending") return Result<bool>.Ok(true);
+
+        payment.Stato     = "failed";
+        payment.UpdatedAt = DateTime.UtcNow;
+        await _paymentRepo.UpdateAsync(payment);
 
         return Result<bool>.Ok(true);
     }

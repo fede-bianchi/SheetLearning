@@ -14,13 +14,16 @@ public class AdminStatsController : ControllerBase
 {
     private readonly GetPlatformOverviewHandler _getPlatformOverviewHandler;
     private readonly GetRevenueStatsHandler _getRevenueStatsHandler;
+    private readonly GetLevelCompletionStatsHandler _levelCompletionHandler;
 
     public AdminStatsController(
         GetPlatformOverviewHandler getPlatformOverviewHandler,
-        GetRevenueStatsHandler getRevenueStatsHandler)
+        GetRevenueStatsHandler getRevenueStatsHandler,
+        GetLevelCompletionStatsHandler levelCompletionHandler)
     {
         _getPlatformOverviewHandler = getPlatformOverviewHandler;
         _getRevenueStatsHandler = getRevenueStatsHandler;
+        _levelCompletionHandler = levelCompletionHandler;
     }
 
     [HttpGet("overview")]
@@ -44,6 +47,13 @@ public class AdminStatsController : ControllerBase
                     new ApiError(result.ErrorCode ?? "BAD_REQUEST", result.ErrorMessage ?? "Errore."))
             };
 
+        return Ok(result.Value);
+    }
+
+    [HttpGet("level-completion")]
+    public async Task<IActionResult> GetLevelCompletion()
+    {
+        var result = await _levelCompletionHandler.HandleAsync();
         return Ok(result.Value);
     }
 }

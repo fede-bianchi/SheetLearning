@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using MusicApp.Application.Common;
 using MusicApp.Application.DTOs;
 using MusicApp.Application.Interfaces;
@@ -14,6 +15,7 @@ namespace MusicApp.Web.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[EnableRateLimiting("GeneralPolicy")]
 public class UsersController : ControllerBase
 {
     private readonly GetMyProfileHandler _getMyProfileHandler;
@@ -27,6 +29,7 @@ public class UsersController : ControllerBase
     private readonly GetMyBundlePurchasesHandler _getMyBundlePurchasesHandler;
     private readonly GetMySubscriptionHandler _getMySubscriptionHandler;
     private readonly GetMyPaymentsHandler _getMyPaymentsHandler;
+    private readonly GetFsrsAnalyticsHandler _fsrsHandler;
     private readonly IRefreshCookieHelper _refreshCookieHelper;
 
     public UsersController(
@@ -41,6 +44,7 @@ public class UsersController : ControllerBase
         GetMyBundlePurchasesHandler getMyBundlePurchasesHandler,
         GetMySubscriptionHandler getMySubscriptionHandler,
         GetMyPaymentsHandler getMyPaymentsHandler,
+        GetFsrsAnalyticsHandler fsrsHandler,
         IRefreshCookieHelper refreshCookieHelper)
     {
         _getMyProfileHandler = getMyProfileHandler;
@@ -54,6 +58,7 @@ public class UsersController : ControllerBase
         _getMyBundlePurchasesHandler = getMyBundlePurchasesHandler;
         _getMySubscriptionHandler = getMySubscriptionHandler;
         _getMyPaymentsHandler = getMyPaymentsHandler;
+        _fsrsHandler = fsrsHandler;
         _refreshCookieHelper = refreshCookieHelper;
     }
 
@@ -271,6 +276,20 @@ public class UsersController : ControllerBase
     {
         var userId = GetCurrentUserId();
         var result = await _getMyPaymentsHandler.HandleAsync(userId);
+        return Ok(result.Value);
+    }
+
+    [HttpGet("me/fsrs-analytics")]
+    [Authorize]
+    public async Task<IActionResult> GetFsrsAnalytics(
+        [FromQuery] int exerciseTypeId)
+    {
+        var userId = GetCurrentUserId();
+        var result = await _fsrsHandler.HandleAsync(userId, exerciseTypeId);
+        if (!result.IsSuccess)
+            return result.ErrorCode == ErrorCodes.ExerciseTypeNotFound
+                ? NotFound(new ApiError(result.ErrorCode!, result.ErrorMessage!))
+                : BadRequest(new ApiError(result.ErrorCode!, result.ErrorMessage!));
         return Ok(result.Value);
     }
 

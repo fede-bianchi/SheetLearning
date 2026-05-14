@@ -64,5 +64,8 @@ public class NotificationConfiguration : IEntityTypeConfiguration<Notification>
             .WithMany()
             .HasForeignKey(e => e.UserId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasIndex(n => new { n.UserId, n.IsArchived, n.CreatedAt })
+              .HasDatabaseName("IX_Notifications_UserArchivedCreated");
     }
 }

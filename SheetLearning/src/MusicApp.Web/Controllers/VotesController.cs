@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using MusicApp.Application.Common;
 using MusicApp.Application.DTOs;
 using MusicApp.Application.UseCases.Forum;
@@ -11,6 +12,7 @@ namespace MusicApp.Web.Controllers;
 [ApiController]
 [Route("api/votes")]
 [Authorize]
+[EnableRateLimiting("GeneralPolicy")]
 public class VotesController : ControllerBase
 {
     private readonly UpsertVoteHandler _upsertVoteHandler;

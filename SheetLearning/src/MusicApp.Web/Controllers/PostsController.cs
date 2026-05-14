@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using MusicApp.Application.Common;
 using MusicApp.Application.DTOs;
 using MusicApp.Application.Interfaces;
@@ -11,6 +12,7 @@ namespace MusicApp.Web.Controllers;
 
 [ApiController]
 [Route("api/posts")]
+[EnableRateLimiting("GeneralPolicy")]
 public class PostsController : ControllerBase
 {
     private readonly GetPostsHandler _getPostsHandler;

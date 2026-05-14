@@ -63,4 +63,55 @@ public class AdminStatsRepository : IAdminStatsRepository
             PagamentiPending      : payments.Count(p => p.Stato == "pending")
         );
     }
+
+    public async Task<IReadOnlyList<LevelCompletionStatsDto>>
+        GetLevelCompletionStatsAsync()
+    {
+        var levels = await _context.Levels
+            .Include(l => l.ExerciseType)
+            .AsNoTracking()
+            .ToListAsync();
+
+        var result = new List<LevelCompletionStatsDto>();
+
+        foreach (var level in levels.OrderBy(l => l.ExerciseTypeId)
+                                     .ThenBy(l => l.NumeroLivello))
+        {
+            var attempts = await _context.Attempts
+                .Where(a => a.LevelId == level.Id)
+                .Select(a => a.Punteggio)
+                .ToListAsync();
+
+            if (attempts.Count == 0)
+            {
+                result.Add(new LevelCompletionStatsDto(
+                    level.Id, level.Nome, level.ExerciseTypeId,
+                    level.ExerciseType.Nome, level.NumeroLivello,
+                    level.PunteggioMinimoSblocco, 0, 0m, 0m, 0m));
+                continue;
+            }
+
+            var sorted     = attempts.OrderBy(p => p).ToList();
+            var p75Index   = (int)Math.Ceiling(sorted.Count * 0.75) - 1;
+            var p75        = sorted[Math.Max(0, p75Index)];
+            var passCount  = attempts.Count(p => p >= level.PunteggioMinimoSblocco);
+            var passRate   = Math.Round((decimal)passCount / attempts.Count, 4);
+            var media      = Math.Round((decimal)attempts.Average(), 2);
+
+            result.Add(new LevelCompletionStatsDto(
+                LevelId                : level.Id,
+                LevelNome              : level.Nome,
+                ExerciseTypeId         : level.ExerciseTypeId,
+                ExerciseTypeNome       : level.ExerciseType.Nome,
+                NumeroLivello          : level.NumeroLivello,
+                PunteggioMinimoSblocco : level.PunteggioMinimoSblocco,
+                TotaleAttemptsPerLevel : attempts.Count,
+                MediaPunteggio         : media,
+                PassRate               : passRate,
+                SuggestedThreshold     : (decimal)p75
+            ));
+        }
+
+        return result;
+    }
 }
