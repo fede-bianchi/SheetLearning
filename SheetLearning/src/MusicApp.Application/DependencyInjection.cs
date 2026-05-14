@@ -1,6 +1,7 @@
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using MusicApp.Application.UseCases.Auth;
+using MusicApp.Application.UseCases.Admin;
 using MusicApp.Application.UseCases.Bookings;
 using MusicApp.Application.UseCases.Bundles;
 using MusicApp.Application.UseCases.Chat;
@@ -100,6 +101,26 @@ public static class DependencyInjection
         services.AddScoped<MarkAllNotificationsReadHandler>();
         services.AddScoped<ArchiveNotificationHandler>();
         services.AddScoped<GetUnreadCountHandler>();
+
+        // Phase 8 — Admin
+        services.AddScoped<GetAdminUsersHandler>();
+        services.AddScoped<GetAdminUserDetailHandler>();
+        services.AddScoped<BanUserHandler>();
+        services.AddScoped<UnbanUserHandler>();
+        services.AddScoped<WarnUserHandler>();
+        services.AddScoped<ChangeUserRoleHandler>();
+        services.AddScoped<DeleteAdminUserHandler>();
+        services.AddScoped<AdminDeletePostHandler>();
+        services.AddScoped<AdminDeleteCommentHandler>();
+        services.AddScoped<GetModerationLogsHandler>();
+        services.AddScoped<GetAdminTeachersHandler>();
+        services.AddScoped<GetTeacherRatingStatsHandler>();
+        services.AddScoped<GetPlatformOverviewHandler>();
+        services.AddScoped<GetRevenueStatsHandler>();
+        services.AddScoped<GetAdminBundlesHandler>();
+        services.AddScoped<CreateBundleHandler>();
+        services.AddScoped<UpdateBundleHandler>();
+        services.AddScoped<ToggleBundleHandler>();
 
         return services;
     }

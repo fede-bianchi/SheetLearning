@@ -26,4 +26,12 @@ public class LessonRatingRepository : ILessonRatingRepository
         await _context.SaveChangesAsync();
         return rating;
     }
+
+    public async Task<IReadOnlyList<LessonRating>> GetByTeacherAsync(int teacherId)
+    {
+        return await _context.LessonRatings
+            .Where(r => r.TeacherId == teacherId)
+            .AsNoTracking()
+            .ToListAsync();
+    }
 }

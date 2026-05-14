@@ -14,4 +14,6 @@ public interface ITeacherProfileRepository
     Task<TeacherProfile> UpdateAsync(TeacherProfile profile);
 
     Task SetCategoriesAsync(int teacherProfileId, IEnumerable<string> categories);
+
+    Task<IReadOnlyList<TeacherProfile>> GetAllWithUserAsync();
 }

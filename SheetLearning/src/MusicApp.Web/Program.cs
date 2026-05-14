@@ -188,6 +188,12 @@ builder.Services.AddAuthorization(options =>
         policy.RequireAuthenticatedUser()
               .RequireClaim("is_active", "True")
               .AddRequirements(new RatingWindowRequirement()));
+
+    // Phase 8 — IsAdmin
+    options.AddPolicy("IsAdmin", policy =>
+        policy.RequireAuthenticatedUser()
+              .RequireClaim("is_active", "True")
+              .RequireClaim("role", "Admin"));
 });
 
 builder.Services.AddFluentValidationAutoValidation();

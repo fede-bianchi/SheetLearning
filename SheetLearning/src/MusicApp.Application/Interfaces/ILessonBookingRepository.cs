@@ -20,4 +20,7 @@ public interface ILessonBookingRepository
 
     Task<LessonBooking> CreateAsync(LessonBooking booking);
     Task<LessonBooking> UpdateAsync(LessonBooking booking);
+
+    Task<int> CountByTeacherAsync(int teacherId);
+    Task<int> CountCompletedByTeacherAsync(int teacherId);
 }

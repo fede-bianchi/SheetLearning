@@ -97,4 +97,13 @@ public class TeacherProfileRepository : ITeacherProfileRepository
 
         await _context.SaveChangesAsync();
     }
+
+    public async Task<IReadOnlyList<TeacherProfile>> GetAllWithUserAsync()
+    {
+        return await _context.TeacherProfiles
+            .Include(tp => tp.User)
+            .Include(tp => tp.Categories)
+            .AsNoTracking()
+            .ToListAsync();
+    }
 }

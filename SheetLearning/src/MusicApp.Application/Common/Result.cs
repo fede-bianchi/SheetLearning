@@ -94,4 +94,13 @@ public static class ErrorCodes
     // Phase 7
     public const string NotificationNotFound = "NOTIFICATION_NOT_FOUND";
     public const string NotificationArchived = "NOTIFICATION_ARCHIVED";
+
+    // Phase 8
+    public const string AdminCannotTargetSelf   = "ADMIN_CANNOT_TARGET_SELF";
+    public const string UserAlreadyBanned       = "USER_ALREADY_BANNED";
+    public const string UserNotBanned           = "USER_NOT_BANNED";
+    public const string InvalidRole             = "INVALID_ROLE";
+    public const string RoleNotFound            = "ROLE_NOT_FOUND";
+    public const string AdminCannotChangeOwnRole = "ADMIN_CANNOT_CHANGE_OWN_ROLE";
+    public const string InvalidDateRange        = "INVALID_DATE_RANGE";
 }

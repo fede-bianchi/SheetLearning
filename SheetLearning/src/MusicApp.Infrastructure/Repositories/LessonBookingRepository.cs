@@ -104,4 +104,13 @@ public class LessonBookingRepository : ILessonBookingRepository
         await _context.SaveChangesAsync();
         return booking;
     }
+
+    public Task<int> CountByTeacherAsync(int teacherId)
+        => _context.LessonBookings
+            .CountAsync(b => b.TeacherId == teacherId);
+
+    public Task<int> CountCompletedByTeacherAsync(int teacherId)
+        => _context.LessonBookings
+            .CountAsync(b => b.TeacherId == teacherId
+                          && b.Stato == "completata");
 }

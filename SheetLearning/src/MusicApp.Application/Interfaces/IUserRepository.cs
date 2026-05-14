@@ -11,4 +11,14 @@ public interface IUserRepository
     Task<bool> NicknameExistsAsync(string nickname);
     Task<User> CreateAsync(User user);
     Task<User> UpdateAsync(User user);
+
+    Task<(IReadOnlyList<User> Users, int TotalCount)> GetAdminPagedAsync(
+        string? filtroRuolo,
+        bool?   filtroAttivo,
+        string? filtroPiano,
+        string? searchQuery,
+        int     page,
+        int     pageSize);
+
+    Task<User?> GetByIdWithDetailsAsync(int id);
 }

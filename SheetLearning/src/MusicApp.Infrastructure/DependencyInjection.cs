@@ -50,6 +50,10 @@ public static class DependencyInjection
         services.AddScoped<INotificationRepository, NotificationRepository>();
         services.AddScoped<INotificationService, NotificationService>();
 
+        // Phase 8
+        services.AddScoped<IModerationLogRepository, ModerationLogRepository>();
+        services.AddScoped<IAdminStatsRepository, AdminStatsRepository>();
+
         return services;
     }
 }
