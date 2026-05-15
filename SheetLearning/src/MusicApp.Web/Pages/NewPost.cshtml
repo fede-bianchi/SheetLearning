@@ -1,0 +1,122 @@
+@page
+@model NewPostModel
+@{
+    ViewData["Title"] = "Nuovo Post - SheetLearning";
+}
+
+<div class="flex-1 flex justify-center items-start">
+  <div class="w-full max-w-[800px] bg-surface-container-lowest rounded-xl shadow-[0_10px_15px_rgba(27,31,59,0.08),0_4px_6px_rgba(27,31,59,0.04)] border border-outline-variant/50 overflow-hidden flex flex-col">
+    <!-- Modal Header -->
+    <div class="px-6 py-4 border-b border-outline-variant/30 flex justify-between items-center bg-surface/30">
+      <div class="flex items-center gap-3">
+        <a href="/forum" class="text-on-surface-variant hover:text-on-surface transition-colors">
+          <span class="material-symbols-outlined">arrow_back</span>
+        </a>
+        <h2 class="font-headline-sm text-headline-sm text-on-surface">Crea Nuovo Post</h2>
+      </div>
+      <div class="flex items-center gap-2">
+        <button class="text-outline hover:text-error transition-colors p-1 rounded-full hover:bg-error-container/20">
+          <span class="material-symbols-outlined">delete_outline</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Form Body -->
+    <div class="p-6 md:p-8 space-y-6 flex-1">
+      <!-- Title Input -->
+      <div class="space-y-2">
+        <label class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider" for="post-title">Titolo della Discussione</label>
+        <input class="w-full px-4 py-3 bg-surface-container-lowest border border-outline-variant rounded-lg font-headline-sm text-headline-sm text-on-surface placeholder:text-outline/50 placeholder:font-body-lg focus:border-primary focus:ring-0 focus:shadow-[0_0_0_3px_rgba(108,92,231,0.2)] outline-none transition-all" id="post-title" placeholder="Es: Consigli per l'interpretazione dello Studio Op. 10 No. 4 di Chopin" type="text" />
+      </div>
+
+      <!-- Category Chips -->
+      <div class="space-y-3">
+        <label class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider flex items-center gap-2">
+          Categoria <span class="material-symbols-outlined text-[16px]">info</span>
+        </label>
+        <div class="flex flex-wrap gap-2">
+          <button class="px-4 py-1.5 rounded-full bg-primary-container text-on-primary-container font-label-md text-label-md border border-primary-container flex items-center gap-1 transition-transform active:scale-95">
+            <span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">done</span>
+            Teoria Musicale
+          </button>
+          <button class="px-4 py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-md text-label-md border border-outline-variant/30 hover:bg-surface-container-high transition-colors active:scale-95">
+            Tecnica Pratica
+          </button>
+          <button class="px-4 py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-md text-label-md border border-outline-variant/30 hover:bg-surface-container-high transition-colors active:scale-95">
+            Strumentazione &amp; Gear
+          </button>
+          <button class="px-4 py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-md text-label-md border border-outline-variant/30 hover:bg-surface-container-high transition-colors active:scale-95">
+            Performance
+          </button>
+          <button class="px-4 py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-md text-label-md border border-outline-variant/30 hover:bg-surface-container-high transition-colors active:scale-95 border-dashed">
+            + Nuova Tag
+          </button>
+        </div>
+      </div>
+
+      <!-- Rich Text Editor -->
+      <div class="space-y-2 flex-1 flex flex-col">
+        <label class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Corpo del Messaggio</label>
+        <div class="border border-outline-variant rounded-lg overflow-hidden flex-1 flex flex-col focus-within:border-primary focus-within:shadow-[0_0_0_3px_rgba(108,92,231,0.2)] transition-all bg-surface-container-lowest">
+          <!-- Editor Toolbar -->
+          <div class="bg-surface-container-low px-3 py-2 border-b border-outline-variant/50 flex flex-wrap gap-1 items-center">
+            <button class="p-1.5 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" title="Grassetto">
+              <span class="material-symbols-outlined text-[20px]">format_bold</span>
+            </button>
+            <button class="p-1.5 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" title="Corsivo">
+              <span class="material-symbols-outlined text-[20px]">format_italic</span>
+            </button>
+            <button class="p-1.5 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" title="Sottolineato">
+              <span class="material-symbols-outlined text-[20px]">format_underlined</span>
+            </button>
+            <div class="w-px h-5 bg-outline-variant/50 mx-1"></div>
+            <button class="p-1.5 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" title="Lista puntata">
+              <span class="material-symbols-outlined text-[20px]">format_list_bulleted</span>
+            </button>
+            <button class="p-1.5 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" title="Lista numerata">
+              <span class="material-symbols-outlined text-[20px]">format_list_numbered</span>
+            </button>
+            <div class="w-px h-5 bg-outline-variant/50 mx-1"></div>
+            <button class="p-1.5 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" title="Inserisci Spartito/Immagine">
+              <span class="material-symbols-outlined text-[20px]">music_note</span>
+            </button>
+            <button class="p-1.5 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" title="Inserisci Link">
+              <span class="material-symbols-outlined text-[20px]">link</span>
+            </button>
+            <div class="ml-auto">
+              <button class="p-1.5 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-md text-label-md flex items-center gap-1">
+                <span class="material-symbols-outlined text-[18px]">code</span>
+                Markdown
+              </button>
+            </div>
+          </div>
+          <!-- Editor Textarea -->
+          <textarea class="w-full flex-1 min-h-[250px] p-4 bg-transparent border-none resize-y outline-none font-body-md text-body-md text-on-surface placeholder:text-outline/50" placeholder="Descrivi qui la tua domanda, osservazione o condividi il tuo materiale..."></textarea>
+          <!-- Attachment Area -->
+          <div class="px-4 py-3 bg-surface-container-lowest border-t border-outline-variant/30 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg border border-dashed border-outline flex items-center justify-center text-outline bg-surface-container-low hover:bg-surface-container-high cursor-pointer transition-colors">
+              <span class="material-symbols-outlined">attach_file</span>
+            </div>
+            <span class="font-label-md text-label-md text-outline">Trascina qui spartiti (PDF) o audio (MP3)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Footer -->
+    <div class="px-6 py-4 bg-surface-container-low border-t border-outline-variant flex justify-between items-center rounded-b-xl">
+      <button class="font-body-lg text-body-lg text-on-surface-variant hover:text-on-surface transition-colors px-4 py-2">
+        Salva come Bozza
+      </button>
+      <div class="flex items-center gap-3">
+        <button class="px-6 py-2.5 rounded-lg bg-secondary/15 text-primary font-body-lg text-body-lg border border-transparent hover:bg-secondary/25 transition-colors font-semibold">
+          Anteprima
+        </button>
+        <button class="px-8 py-2.5 rounded-lg bg-primary-container text-on-primary font-body-lg text-body-lg hover:brightness-110 transition-all font-semibold flex items-center gap-2 active:scale-95">
+          <span class="material-symbols-outlined text-[20px]">send</span>
+          Pubblica
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

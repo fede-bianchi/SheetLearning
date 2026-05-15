@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>@ViewData["Title"] - SheetLearning</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+  @await Html.PartialAsync("_TailwindConfigPartial")
+</head>
+<body class="bg-surface text-on-surface antialiased font-body-md h-screen overflow-hidden flex">
+  <main class="flex-1 w-full h-screen overflow-y-auto bg-surface px-margin-mobile md:px-margin-desktop py-8">
+    @RenderBody()
+  </main>
+  @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

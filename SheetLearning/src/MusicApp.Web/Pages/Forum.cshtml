@@ -1,0 +1,184 @@
+@page
+@model ForumModel
+@{
+    ViewData["Title"] = "Forum della Community - SheetLearning";
+}
+
+<!-- Header & Actions -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
+  <div>
+    <h1 class="font-headline-md text-headline-md text-on-surface">Forum della Community</h1>
+    <p class="font-body-md text-body-md text-on-surface-variant mt-2 max-w-2xl">
+      Join the conversation. Discuss techniques, share your progress, and connect with other musicians in our premium community.
+    </p>
+  </div>
+  <div class="flex flex-col sm:flex-row items-center gap-4">
+    <div class="relative w-full sm:w-64">
+      <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+      <input class="w-full bg-surface-container-lowest border border-outline-variant text-on-surface font-body-md text-body-md rounded-lg pl-10 pr-4 py-2.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all" placeholder="Search discussions..." type="text" />
+    </div>
+    <a href="/forum/new" class="w-full sm:w-auto bg-primary-container text-on-primary-container font-label-md text-label-md px-5 py-2.5 rounded-lg flex items-center justify-center gap-2 hover:opacity-90 transition-opacity shadow-sm whitespace-nowrap">
+      <span class="material-symbols-outlined text-[18px]">add</span>
+      Nuovo Post
+    </a>
+  </div>
+</div>
+
+<!-- Filters + Content Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+  <!-- Main Feed (Left Column) -->
+  <div class="lg:col-span-8 flex flex-col gap-6">
+    <!-- Filter Pills -->
+    <div class="flex flex-wrap items-center gap-3 border-b border-outline-variant pb-4 mb-2">
+      <button class="bg-primary-container text-on-primary-container font-label-md text-label-md px-4 py-1.5 rounded-full border border-transparent shadow-sm">Recent</button>
+      <button class="bg-surface-container-lowest text-on-surface-variant font-label-md text-label-md px-4 py-1.5 rounded-full border border-outline-variant hover:bg-surface-variant transition-colors">Most Voted</button>
+      <div class="w-px h-6 bg-outline-variant mx-2"></div>
+      <button class="bg-surface-container-lowest text-on-surface-variant font-label-md text-label-md px-4 py-1.5 rounded-full border border-outline-variant hover:bg-surface-variant transition-colors">Theory</button>
+      <button class="bg-surface-container-lowest text-on-surface-variant font-label-md text-label-md px-4 py-1.5 rounded-full border border-outline-variant hover:bg-surface-variant transition-colors">Practice</button>
+      <button class="bg-surface-container-lowest text-on-surface-variant font-label-md text-label-md px-4 py-1.5 rounded-full border border-outline-variant hover:bg-surface-variant transition-colors">Gear</button>
+    </div>
+
+    <!-- Post Card 1 -->
+    <article class="bg-surface-container-lowest border border-outline-variant rounded-xl p-5 md:p-6 hover:shadow-[0_4px_6px_rgba(27,31,59,0.04),0_10px_15px_rgba(27,31,59,0.08)] transition-all duration-300 flex gap-4 md:gap-6 group">
+      <div class="flex flex-col items-center gap-1 min-w-[40px]">
+        <button class="text-on-surface-variant hover:text-primary transition-colors p-1 rounded-full hover:bg-primary-fixed">
+          <span class="material-symbols-outlined text-[24px]">keyboard_arrow_up</span>
+        </button>
+        <span class="font-label-md text-label-md text-on-surface">124</span>
+        <button class="text-on-surface-variant hover:text-error transition-colors p-1 rounded-full hover:bg-error-container">
+          <span class="material-symbols-outlined text-[24px]">keyboard_arrow_down</span>
+        </button>
+      </div>
+      <div class="flex-grow flex flex-col">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant text-[10px] font-label-md">ER</div>
+          <span class="font-label-md text-label-md text-on-surface">Elena Rostova</span>
+          <span class="text-outline-variant">&bull;</span>
+          <span class="font-body-md text-body-md text-on-surface-variant text-[13px]">2 hours ago</span>
+          <span class="ml-auto bg-surface-container text-on-surface-variant font-label-md text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wider">Practice</span>
+        </div>
+        <h2 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors cursor-pointer">
+          Mastering the Chopin Nocturne Op. 9 No. 2 - Phrasing questions
+        </h2>
+        <p class="font-body-md text-body-md text-on-surface-variant mt-2 line-clamp-2">
+          I've been working on the rubato section in measure 13, but I feel like I'm losing the underlying pulse. How do you balance the expressive timing without making it sound completely disconnected from the left hand?
+        </p>
+        <div class="flex items-center gap-4 mt-4 pt-4 border-t border-surface-container">
+          <div class="flex items-center gap-1.5 text-on-surface-variant hover:text-primary cursor-pointer transition-colors">
+            <span class="material-symbols-outlined text-[18px]">chat_bubble</span>
+            <span class="font-label-md text-label-md text-[13px]">45 Comments</span>
+          </div>
+          <div class="flex items-center gap-1.5 text-on-surface-variant hover:text-primary cursor-pointer transition-colors ml-auto">
+            <span class="material-symbols-outlined text-[18px]">share</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Post Card 2 -->
+    <article class="bg-surface-container-lowest border border-outline-variant rounded-xl p-5 md:p-6 hover:shadow-[0_4px_6px_rgba(27,31,59,0.04),0_10px_15px_rgba(27,31,59,0.08)] transition-all duration-300 flex gap-4 md:gap-6 group">
+      <div class="flex flex-col items-center gap-1 min-w-[40px]">
+        <button class="text-on-surface-variant hover:text-primary transition-colors p-1 rounded-full hover:bg-primary-fixed">
+          <span class="material-symbols-outlined text-[24px]">keyboard_arrow_up</span>
+        </button>
+        <span class="font-label-md text-label-md text-on-surface">89</span>
+        <button class="text-on-surface-variant hover:text-error transition-colors p-1 rounded-full hover:bg-error-container">
+          <span class="material-symbols-outlined text-[24px]">keyboard_arrow_down</span>
+        </button>
+      </div>
+      <div class="flex-grow flex flex-col">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant text-[10px] font-label-md">MD</div>
+          <span class="font-label-md text-label-md text-on-surface">Marc Dubois</span>
+          <span class="text-outline-variant">&bull;</span>
+          <span class="font-body-md text-body-md text-on-surface-variant text-[13px]">5 hours ago</span>
+          <span class="ml-auto bg-surface-container text-on-surface-variant font-label-md text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wider">Gear</span>
+        </div>
+        <h2 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors cursor-pointer">
+          Best digital piano for conservatory students living in apartments?
+        </h2>
+        <p class="font-body-md text-body-md text-on-surface-variant mt-2 line-clamp-2">
+          I need an upgrade for silent practice. I'm looking at the Yamaha Clavinova series versus the Kawai CA line. Action is my absolute top priority over built-in sounds, as I mostly use VSTs anyway.
+        </p>
+        <div class="flex items-center gap-4 mt-4 pt-4 border-t border-surface-container">
+          <div class="flex items-center gap-1.5 text-on-surface-variant hover:text-primary cursor-pointer transition-colors">
+            <span class="material-symbols-outlined text-[18px]">chat_bubble</span>
+            <span class="font-label-md text-label-md text-[13px]">112 Comments</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Post Card 3 -->
+    <article class="bg-surface-container-lowest border border-outline-variant rounded-xl p-5 md:p-6 hover:shadow-[0_4px_6px_rgba(27,31,59,0.04),0_10px_15px_rgba(27,31,59,0.08)] transition-all duration-300 flex gap-4 md:gap-6 group">
+      <div class="flex flex-col items-center gap-1 min-w-[40px]">
+        <button class="text-primary transition-colors p-1 rounded-full bg-primary-fixed">
+          <span class="material-symbols-outlined text-[24px]">keyboard_arrow_up</span>
+        </button>
+        <span class="font-label-md text-label-md text-primary">210</span>
+        <button class="text-on-surface-variant hover:text-error transition-colors p-1 rounded-full hover:bg-error-container">
+          <span class="material-symbols-outlined text-[24px]">keyboard_arrow_down</span>
+        </button>
+      </div>
+      <div class="flex-grow flex flex-col">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-label-md font-bold text-[10px]">JS</div>
+          <span class="font-label-md text-label-md text-on-surface">Julian Smith</span>
+          <span class="text-outline-variant">&bull;</span>
+          <span class="font-body-md text-body-md text-on-surface-variant text-[13px]">1 day ago</span>
+          <span class="ml-auto bg-surface-container text-on-surface-variant font-label-md text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wider">Theory</span>
+        </div>
+        <h2 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors cursor-pointer">
+          Understanding secondary dominants in Jazz contexts
+        </h2>
+        <p class="font-body-md text-body-md text-on-surface-variant mt-2 line-clamp-2">
+          Can someone break down how to smoothly voice lead a VI7 going into a ii-V-I progression? I understand the theory conceptually, but on the keyboard, it always sounds clunky when I try to add extensions.
+        </p>
+        <div class="flex items-center gap-4 mt-4 pt-4 border-t border-surface-container">
+          <div class="flex items-center gap-1.5 text-on-surface-variant hover:text-primary cursor-pointer transition-colors">
+            <span class="material-symbols-outlined text-[18px]">chat_bubble</span>
+            <span class="font-label-md text-label-md text-[13px]">34 Comments</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Load More -->
+    <button class="w-full py-4 mt-4 border border-outline-variant rounded-xl text-primary font-label-md text-label-md hover:bg-surface-container-low transition-colors">
+      Load More Discussions
+    </button>
+  </div>
+
+  <!-- Right Sidebar -->
+  <div class="lg:col-span-4 flex flex-col gap-6">
+    <!-- Info/Promo Card (Glassmorphism) -->
+    <div class="glass-panel border border-outline-variant rounded-xl p-6 relative overflow-hidden">
+      <div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"></div>
+      <div class="relative z-10">
+        <div class="flex items-center gap-2 mb-4 text-primary">
+          <span class="material-symbols-outlined">campaign</span>
+          <h3 class="font-label-md text-label-md uppercase tracking-widest">Community Update</h3>
+        </div>
+        <h4 class="font-headline-sm text-headline-sm text-on-surface mb-2">Masterclass Weekend</h4>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-4">
+          Join us this Saturday for a live virtual masterclass on Baroque articulation with Professor H. Schmidt. Exclusive to registered forum members.
+        </p>
+        <button class="text-primary font-label-md text-label-md flex items-center gap-1 hover:underline">
+          Register Now <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Trending Topics -->
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6">
+      <h3 class="font-headline-sm text-headline-sm text-on-surface mb-4">Trending Tags</h3>
+      <div class="flex flex-wrap gap-2">
+        <span class="px-3 py-1 bg-surface-container text-on-surface-variant rounded-md font-body-md text-[13px] hover:bg-surface-variant cursor-pointer transition-colors">#Chopin</span>
+        <span class="px-3 py-1 bg-surface-container text-on-surface-variant rounded-md font-body-md text-[13px] hover:bg-surface-variant cursor-pointer transition-colors">#SightReading</span>
+        <span class="px-3 py-1 bg-surface-container text-on-surface-variant rounded-md font-body-md text-[13px] hover:bg-surface-variant cursor-pointer transition-colors">#ConservatoryPrep</span>
+        <span class="px-3 py-1 bg-surface-container text-on-surface-variant rounded-md font-body-md text-[13px] hover:bg-surface-variant cursor-pointer transition-colors">#Technique</span>
+        <span class="px-3 py-1 bg-surface-container text-on-surface-variant rounded-md font-body-md text-[13px] hover:bg-surface-variant cursor-pointer transition-colors">#AudioInterfaces</span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,100 @@
+@page
+@model ExerciseNoteReadingImmersiveModel
+@{
+    ViewData["Title"] = "Lettura Note - SheetLearning";
+    Layout = "_LayoutImmersive";
+}
+
+<div class="max-w-4xl mx-auto flex flex-col h-full gap-6">
+  <!-- Header -->
+  <header class="flex items-center justify-between">
+    <div class="flex items-center gap-4">
+      <a href="/exercises" class="p-2 rounded-full hover:bg-surface-variant transition-colors text-on-surface-variant">
+        <span class="material-symbols-outlined">chevron_left</span>
+      </a>
+      <h2 class="font-headline-md text-headline-md text-on-surface">Lettura Note - Chiave di Violino</h2>
+    </div>
+    <div class="bg-surface-tint/10 text-surface-tint px-3 py-1 rounded-full font-label-md text-label-md flex items-center gap-1 border border-surface-tint/20">
+      <span class="material-symbols-outlined text-[16px]">emoji_events</span>
+      New Record!
+    </div>
+  </header>
+
+  <!-- Stats Overlay Row -->
+  <div class="flex justify-between items-center gap-4 py-2 border-b border-outline-variant/30">
+    <div class="flex flex-col items-center flex-1">
+      <span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Timer</span>
+      <span class="font-headline-sm text-headline-sm text-on-surface font-mono">1.2s</span>
+    </div>
+    <div class="w-px h-8 bg-outline-variant/30"></div>
+    <div class="flex flex-col items-center flex-1">
+      <span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Streak</span>
+      <span class="font-headline-sm text-headline-sm text-surface-tint font-mono">14 🔥</span>
+    </div>
+    <div class="w-px h-8 bg-outline-variant/30"></div>
+    <div class="flex flex-col items-center flex-1">
+      <span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Accuracy</span>
+      <span class="font-headline-sm text-headline-sm text-on-surface font-mono">98%</span>
+    </div>
+  </div>
+
+  <!-- Central Exercise Card -->
+  <div class="flex-1 bg-white border border-[#E0E4F0] rounded-xl flex flex-col relative overflow-hidden shadow-[0px_4px_6px_rgba(27,31,59,0.04)] hover:shadow-[0px_10px_15px_rgba(27,31,59,0.08)] transition-shadow duration-300">
+    <!-- Staff Area -->
+    <div class="flex-1 flex items-center justify-center p-8 bg-surface-bright relative">
+      <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+PHRlY3Qgd2lkdGg9IjIwIiBoZWlnaHQ9IjIwIiBmaWxsPSJub25lIj48L3JlY3Q+PHBhdGggZD0iTSAyMCAwIEwgMCAwIDAgMjAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2UwZTRmMCIgc3Ryb2tlLXdpZHRoPSIwLjUiPjwvcGF0aD48L3N2Zz4=')] opacity-50"></div>
+      <div class="relative z-10 w-full max-w-lg aspect-[2/1] border border-outline-variant/20 rounded-lg bg-white shadow-sm flex items-center justify-center overflow-hidden">
+        <div class="w-[80%] h-32 flex flex-col justify-between py-4 relative">
+          <div class="w-full h-px bg-on-surface"></div>
+          <div class="w-full h-px bg-on-surface"></div>
+          <div class="w-full h-px bg-on-surface"></div>
+          <div class="w-full h-px bg-on-surface"></div>
+          <div class="w-full h-px bg-on-surface"></div>
+          <div class="absolute left-0 top-1/2 -translate-y-1/2 text-[80px] font-serif leading-none">𝄞</div>
+          <div class="absolute left-1/2 top-1/2 -translate-y-[calc(50%+8px)] w-4 h-4 bg-on-surface rounded-full"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Virtual Piano Keyboard -->
+    <div class="h-48 bg-surface-container-low border-t border-[#E0E4F0] p-4 flex justify-center items-end pb-0">
+      <div class="relative flex h-full pb-4">
+        <div class="w-12 h-full piano-key-white relative hover:bg-surface-variant transition-colors cursor-pointer"></div>
+        <div class="w-8 h-2/3 piano-key-black absolute left-[32px] cursor-pointer hover:bg-inverse-surface transition-colors"></div>
+        <div class="w-12 h-full piano-key-white relative hover:bg-surface-variant transition-colors cursor-pointer"></div>
+        <div class="w-8 h-2/3 piano-key-black absolute left-[80px] cursor-pointer hover:bg-inverse-surface transition-colors"></div>
+        <div class="w-12 h-full piano-key-white relative hover:bg-surface-variant transition-colors cursor-pointer"></div>
+        <div class="w-12 h-full piano-key-white relative hover:bg-surface-variant transition-colors cursor-pointer"></div>
+        <div class="w-8 h-2/3 piano-key-black absolute left-[176px] cursor-pointer hover:bg-inverse-surface transition-colors"></div>
+        <div class="w-12 h-full piano-key-white relative hover:bg-surface-variant transition-colors cursor-pointer piano-key-active"></div>
+        <div class="w-8 h-2/3 piano-key-black absolute left-[224px] cursor-pointer hover:bg-inverse-surface transition-colors"></div>
+        <div class="w-12 h-full piano-key-white relative hover:bg-surface-variant transition-colors cursor-pointer"></div>
+        <div class="w-8 h-2/3 piano-key-black absolute left-[272px] cursor-pointer hover:bg-inverse-surface transition-colors"></div>
+        <div class="w-12 h-full piano-key-white relative hover:bg-surface-variant transition-colors cursor-pointer"></div>
+        <div class="w-12 h-full piano-key-white relative hover:bg-surface-variant transition-colors cursor-pointer border-l-0"></div>
+        <div class="w-8 h-2/3 piano-key-black absolute left-[368px] cursor-pointer hover:bg-inverse-surface transition-colors"></div>
+        <div class="w-12 h-full piano-key-white relative hover:bg-surface-variant transition-colors cursor-pointer"></div>
+        <div class="w-8 h-2/3 piano-key-black absolute left-[416px] cursor-pointer hover:bg-inverse-surface transition-colors"></div>
+        <div class="w-12 h-full piano-key-white relative hover:bg-surface-variant transition-colors cursor-pointer"></div>
+        <div class="w-12 h-full piano-key-white relative hover:bg-surface-variant transition-colors cursor-pointer"></div>
+        <div class="w-8 h-2/3 piano-key-black absolute left-[512px] cursor-pointer hover:bg-inverse-surface transition-colors"></div>
+        <div class="w-12 h-full piano-key-white relative hover:bg-surface-variant transition-colors cursor-pointer"></div>
+        <div class="w-8 h-2/3 piano-key-black absolute left-[560px] cursor-pointer hover:bg-inverse-surface transition-colors"></div>
+        <div class="w-12 h-full piano-key-white relative hover:bg-surface-variant transition-colors cursor-pointer"></div>
+        <div class="w-8 h-2/3 piano-key-black absolute left-[608px] cursor-pointer hover:bg-inverse-surface transition-colors"></div>
+        <div class="w-12 h-full piano-key-white relative hover:bg-surface-variant transition-colors cursor-pointer border-r"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Action Row -->
+  <div class="flex justify-between items-center pt-2">
+    <button class="px-6 py-2 rounded-lg bg-surface-variant text-on-surface-variant hover:bg-outline-variant/30 transition-colors font-body-md text-body-md flex items-center gap-2">
+      <span class="material-symbols-outlined text-[20px]">pause</span>
+      Pause
+    </button>
+    <button class="px-8 py-3 rounded-lg bg-primary-container text-on-primary-container hover:shadow-[0_0_15px_rgba(108,92,231,0.5)] transition-all font-body-md text-body-md font-semibold">
+      Next Exercise
+    </button>
+  </div>
+</div>
