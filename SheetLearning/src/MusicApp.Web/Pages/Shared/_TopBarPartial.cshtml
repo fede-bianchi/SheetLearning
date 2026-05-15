@@ -1,0 +1,26 @@
+<header class="bg-surface-container-lowest border-b border-outline-variant flex justify-between items-center h-16 px-margin-mobile md:px-margin-desktop sticky top-0 z-40">
+  <div class="flex items-center gap-4 flex-1">
+    <button class="md:hidden text-on-surface-variant hover:text-primary transition-colors p-1" onclick="document.getElementById('mobile-sidebar')?.classList.toggle('hidden')">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+    <div class="relative w-64 hidden sm:block">
+      <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+      <input class="w-full bg-surface-container-low border-none rounded-full py-2 pl-10 pr-4 font-body-md text-body-md text-on-surface focus:ring-2 focus:ring-primary-container focus:bg-surface-container-lowest transition-all placeholder:text-on-surface-variant/70" placeholder="Search..." type="text" />
+    </div>
+  </div>
+  <div class="flex items-center gap-4">
+    <button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:text-primary-container hover:bg-surface-container-low transition-colors relative">
+      <span class="material-symbols-outlined">notifications</span>
+      <span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border-2 border-surface-container-lowest"></span>
+    </button>
+    <button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:text-primary-container hover:bg-surface-container-low transition-colors">
+      <span class="material-symbols-outlined">settings</span>
+    </button>
+    <button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:text-primary-container hover:bg-surface-container-low transition-colors">
+      <span class="material-symbols-outlined">help</span>
+    </button>
+    <div class="w-10 h-10 rounded-full bg-surface-variant overflow-hidden border border-outline-variant cursor-pointer">
+      <div class="w-full h-full flex items-center justify-center text-on-surface-variant font-label-md">M</div>
+    </div>
+  </div>
+</header>
