@@ -1,0 +1,79 @@
+@page
+@model LoginModel
+@{
+    ViewData["Title"] = "SheetLearning - Login";
+    Layout = "_LayoutPublic";
+}
+
+<main class="flex-grow flex items-center justify-center p-margin-mobile md:p-margin-desktop mt-14">
+  <div class="w-full max-w-[440px] bg-surface-container-lowest border border-surface-variant rounded-xl shadow-[0px_4px_6px_rgba(27,31,59,0.04),0px_10px_15px_rgba(27,31,59,0.08)] p-6 md:p-8">
+    <div class="text-center mb-8">
+      <h1 class="font-headline-md text-headline-md text-on-surface mb-2">Bentornato</h1>
+      <p class="font-body-md text-body-md text-on-surface-variant">Log in to continue your musical journey.</p>
+    </div>
+
+    <!-- Social Logins -->
+    <div class="flex flex-col gap-3 mb-6">
+      <button class="w-full flex items-center justify-center gap-3 bg-surface border border-outline-variant rounded-lg py-2.5 px-4 font-body-md text-body-md text-on-surface hover:bg-surface-variant transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 focus:ring-offset-surface-container-lowest">
+        <img alt="Google" class="w-5 h-5 object-contain" src="https://lh3.googleusercontent.com/COxitqgJr1sJnIDe8-jiKhxDx1FrYbtRHKJ9z_hELisAlapwE9LUPh6fcXIfb5vwpbMl4xl9H9TRFPc5NOO8Sb3VSgIBrfRYvW6cUA" />
+        Continue with Google
+      </button>
+      <button class="w-full flex items-center justify-center gap-3 bg-surface border border-outline-variant rounded-lg py-2.5 px-4 font-body-md text-body-md text-on-surface hover:bg-surface-variant transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 focus:ring-offset-surface-container-lowest">
+        <span class="material-symbols-outlined text-[20px] text-on-surface" style="font-variation-settings: 'FILL' 1;">apple</span>
+        Continue with Apple
+      </button>
+    </div>
+
+    <div class="flex items-center gap-4 mb-6">
+      <div class="h-px bg-outline-variant flex-grow"></div>
+      <span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Or</span>
+      <div class="h-px bg-outline-variant flex-grow"></div>
+    </div>
+
+    <!-- Email Login Form -->
+    <form method="post" class="flex flex-col gap-5">
+      <div>
+        <label class="block font-label-md text-label-md text-on-surface mb-1" for="email">Email</label>
+        <input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg py-2.5 px-3 font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary focus:ring-3 focus:ring-primary/20 transition-all" id="email" name="Email" placeholder="maestro@example.com" required type="email" />
+      </div>
+      <div>
+        <div class="flex items-center justify-between mb-1">
+          <label class="block font-label-md text-label-md text-on-surface" for="password">Password</label>
+          <a class="font-label-md text-label-md text-primary hover:text-primary-container transition-colors" href="/forgot-password">Forgot Password?</a>
+        </div>
+        <div class="relative">
+          <input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg py-2.5 px-3 pr-10 font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary focus:ring-3 focus:ring-primary/20 transition-all" id="password" name="Password" placeholder="••••••••" required type="password" />
+          <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface transition-colors focus:outline-none" onclick="togglePassword()">
+            <span class="material-symbols-outlined text-[20px]" id="visibility-icon">visibility</span>
+          </button>
+        </div>
+      </div>
+      <button class="w-full bg-primary-container text-on-primary-container font-body-lg text-body-lg py-3 px-4 rounded-lg hover:brightness-110 active:scale-[0.98] transition-all shadow-sm flex items-center justify-center mt-2" type="submit">
+        Login
+      </button>
+    </form>
+
+    <div class="mt-8 text-center">
+      <p class="font-body-md text-body-md text-on-surface-variant">
+        Don't have an account?
+        <a class="text-primary font-bold hover:underline" href="/register">Register</a>
+      </p>
+    </div>
+  </div>
+</main>
+
+@section Scripts {
+  <script>
+    function togglePassword() {
+      const input = document.getElementById('password');
+      const icon = document.getElementById('visibility-icon');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.textContent = 'visibility_off';
+      } else {
+        input.type = 'password';
+        icon.textContent = 'visibility';
+      }
+    }
+  </script>
+}

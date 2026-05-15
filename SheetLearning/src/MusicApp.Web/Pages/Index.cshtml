@@ -1,10 +1,60 @@
-﻿@page
+@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "SheetLearning - Impara la musica con precisione";
+    Layout = "_LayoutPublic";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!-- Hero Section -->
+<section class="relative pt-24 pb-32 px-margin-mobile md:px-margin-desktop overflow-hidden">
+  <div class="absolute inset-0 z-0 opacity-10 mix-blend-multiply pointer-events-none" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC6jSqtpN78mn49h5zQM0wpn9c8CTKaTsrmGcL2vOA2ExuMC1QkJGmEPAQ5z8zhyGXaCVvTJsp9gFq4f0AEoA5Qb8pnQg1Q8PLXwnbiOMilYyNifQ2QLRdjz0rxqY98wUrbEU2DRQEUIvN9U03-GMtfY7ufuMDmog_f7mshjiXaE0QQ6Xc-CrFI8jiGeCtZ81GhRSxEGuFUOR30SODw5gvHIeF1XL6_t1qvMSe_Y1lApGn0NQAiDiTqoLKQwgkI5UH44hdI6SNwI40'); background-size: cover; background-position: center;"></div>
+  <div class="relative z-10 max-w-4xl mx-auto text-center flex flex-col items-center">
+    <span class="inline-flex items-center px-3 py-1 rounded-full bg-secondary-container/20 text-on-secondary-container font-label-md text-label-md mb-6 border border-secondary-container/30">
+      Precision Minimalism in Music Education
+    </span>
+    <h1 class="font-display-lg-mobile text-display-lg-mobile md:font-display-lg md:text-display-lg text-on-surface mb-6">Impara la musica con precisione</h1>
+    <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mb-10">Esercizi procedurali, lezioni con esperti e una community vibrante.</p>
+    <div class="flex gap-4">
+      <a href="/register" class="bg-primary-container text-on-primary-container px-8 py-3 rounded-lg font-label-md text-label-md hover:opacity-90 transition-opacity shadow-[0_4px_6px_rgba(27,31,59,0.04),0_10px_15px_rgba(27,31,59,0.08)] flex items-center gap-2">
+        Inizia Gratis
+        <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Exercises Preview -->
+<section class="py-20 px-margin-mobile md:px-margin-desktop bg-surface-container-lowest border-y border-outline-variant">
+  <div class="max-w-[1440px] mx-auto">
+    <div class="text-center mb-16">
+      <h2 class="font-headline-md text-headline-md text-on-surface mb-4">Master Your Craft</h2>
+      <p class="font-body-lg text-body-lg text-on-surface-variant">Procedural exercises designed for rapid skill acquisition.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Card 1 -->
+      <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-8 hover:shadow-[0_4px_6px_rgba(27,31,59,0.04),0_10px_15px_rgba(27,31,59,0.08)] transition-all group flex flex-col items-start">
+        <div class="w-12 h-12 rounded-lg bg-secondary-container/20 flex items-center justify-center text-on-secondary-container mb-6 group-hover:bg-primary-container group-hover:text-on-primary-container transition-colors">
+          <span class="material-symbols-outlined">music_note</span>
+        </div>
+        <h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Lettura Note</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant">Improve sight-reading with algorithmic sheet music generation tailored to your level.</p>
+      </div>
+      <!-- Card 2 -->
+      <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-8 hover:shadow-[0_4px_6px_rgba(27,31,59,0.04),0_10px_15px_rgba(27,31,59,0.08)] transition-all group flex flex-col items-start">
+        <div class="w-12 h-12 rounded-lg bg-secondary-container/20 flex items-center justify-center text-on-secondary-container mb-6 group-hover:bg-primary-container group-hover:text-on-primary-container transition-colors">
+          <span class="material-symbols-outlined">piano</span>
+        </div>
+        <h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Accordi</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant">Master complex harmonies and chord progressions across multiple instruments.</p>
+      </div>
+      <!-- Card 3 -->
+      <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-8 hover:shadow-[0_4px_6px_rgba(27,31,59,0.04),0_10px_15px_rgba(27,31,59,0.08)] transition-all group flex flex-col items-start">
+        <div class="w-12 h-12 rounded-lg bg-secondary-container/20 flex items-center justify-center text-on-secondary-container mb-6 group-hover:bg-primary-container group-hover:text-on-primary-container transition-colors">
+          <span class="material-symbols-outlined">graphic_eq</span>
+        </div>
+        <h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Ritmo</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant">Develop impeccable timing with interactive metronome and polyrhythm drills.</p>
+      </div>
+    </div>
+  </div>
+</section>
