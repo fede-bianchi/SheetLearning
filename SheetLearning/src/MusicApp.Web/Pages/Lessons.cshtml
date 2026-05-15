@@ -1,0 +1,155 @@
+@page
+@model LessonsModel
+@{
+    ViewData["Title"] = "Le Mie Lezioni - SheetLearning";
+}
+
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+  <div>
+    <h2 class="font-display-lg text-display-lg text-on-surface mb-2">Le Mie Lezioni</h2>
+    <p class="font-body-lg text-body-lg text-on-surface-variant">Gestisci le tue sessioni di apprendimento musicale.</p>
+  </div>
+  <button class="bg-primary-container text-on-primary-container hover:bg-surface-tint font-label-md text-label-md px-6 py-3 rounded-full flex items-center gap-2 shadow-[0_4px_6px_rgba(27,31,59,0.04)] hover:shadow-[0_10px_15px_rgba(27,31,59,0.08)] transition-all duration-200">
+    <span class="material-symbols-outlined text-[18px]">add</span>
+    Prenota Nuova Lezione
+  </button>
+</div>
+
+<!-- Filter Bar -->
+<div class="flex items-center gap-2 mb-8 overflow-x-auto pb-2 scrollbar-hide">
+  <button class="px-5 py-2 rounded-full font-label-md text-label-md bg-secondary-container text-on-secondary-container border border-transparent shadow-sm">
+    Tutte
+  </button>
+  <button class="px-5 py-2 rounded-full font-label-md text-label-md bg-surface-container-lowest text-on-surface-variant border border-outline-variant hover:bg-surface-container-low transition-colors whitespace-nowrap">
+    Programmate
+  </button>
+  <button class="px-5 py-2 rounded-full font-label-md text-label-md bg-surface-container-lowest text-on-surface-variant border border-outline-variant hover:bg-surface-container-low transition-colors whitespace-nowrap">
+    Completate
+  </button>
+  <button class="px-5 py-2 rounded-full font-label-md text-label-md bg-surface-container-lowest text-on-surface-variant border border-outline-variant hover:bg-surface-container-low transition-colors whitespace-nowrap">
+    Annullate
+  </button>
+</div>
+
+<!-- Lessons Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+  <!-- Card 1: Scheduled (Upcoming) -->
+  <div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-6 hover:shadow-[0_10px_15px_rgba(27,31,59,0.08)] transition-shadow duration-300 relative overflow-hidden group">
+    <div class="absolute top-0 left-0 w-1 h-full bg-primary-container"></div>
+    <div class="flex justify-between items-start mb-6">
+      <div class="flex items-center gap-4">
+        <div class="w-12 h-12 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant font-label-md">MB</div>
+        <div>
+          <h3 class="font-headline-sm text-headline-sm text-on-surface">Marta Bianchi</h3>
+          <p class="font-label-md text-label-md text-on-surface-variant flex items-center gap-1 mt-1">
+            <span class="material-symbols-outlined text-[14px]">piano</span>
+            Pianoforte
+          </p>
+        </div>
+      </div>
+      <span class="bg-primary-fixed text-on-primary-fixed-variant font-label-md text-label-md px-3 py-1 rounded-full text-[10px] uppercase tracking-wider">
+        Programmata
+      </span>
+    </div>
+    <div class="bg-surface-bright rounded-lg p-4 mb-6 border border-outline-variant/50">
+      <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center gap-2 text-on-surface">
+          <span class="material-symbols-outlined text-primary-container text-[20px]">calendar_month</span>
+          <span class="font-body-lg text-body-lg">24 Ottobre 2024</span>
+        </div>
+      </div>
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2 text-on-surface-variant">
+          <span class="material-symbols-outlined text-[20px]">schedule</span>
+          <span class="font-body-md text-body-md">15:00 - 16:00</span>
+        </div>
+        <span class="font-label-md text-label-md text-primary-container">Tra 2 giorni</span>
+      </div>
+    </div>
+    <div class="flex gap-3">
+      <button class="flex-1 bg-surface-container-low text-primary-container font-label-md text-label-md py-2.5 rounded-lg border border-transparent hover:bg-primary-container/10 transition-colors">
+        Dettagli
+      </button>
+      <button class="flex-1 bg-primary-container text-on-primary-container font-label-md text-label-md py-2.5 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+        Entra in Aula
+      </button>
+    </div>
+  </div>
+
+  <!-- Card 2: Completed -->
+  <div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-6 hover:shadow-[0_4px_6px_rgba(27,31,59,0.04)] transition-shadow duration-300 relative">
+    <div class="flex justify-between items-start mb-6 opacity-80">
+      <div class="flex items-center gap-4">
+        <div class="w-12 h-12 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant font-label-md">LR</div>
+        <div>
+          <h3 class="font-headline-sm text-headline-sm text-on-surface">Luca Romano</h3>
+          <p class="font-label-md text-label-md text-on-surface-variant flex items-center gap-1 mt-1">
+            <span class="material-symbols-outlined text-[14px]">music_note</span>
+            Teoria Musicale
+          </p>
+        </div>
+      </div>
+      <span class="bg-surface-variant text-on-surface-variant font-label-md text-label-md px-3 py-1 rounded-full text-[10px] uppercase tracking-wider">
+        Completata
+      </span>
+    </div>
+    <div class="bg-surface-bright rounded-lg p-4 mb-6 border border-outline-variant/50 opacity-80">
+      <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center gap-2 text-on-surface">
+          <span class="material-symbols-outlined text-outline text-[20px]">calendar_month</span>
+          <span class="font-body-lg text-body-lg">18 Ottobre 2024</span>
+        </div>
+      </div>
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2 text-on-surface-variant">
+          <span class="material-symbols-outlined text-[20px]">schedule</span>
+          <span class="font-body-md text-body-md">10:00 - 11:30</span>
+        </div>
+      </div>
+    </div>
+    <div class="flex gap-3">
+      <button class="flex-1 bg-surface-container-lowest text-on-surface border border-outline-variant font-label-md text-label-md py-2.5 rounded-lg hover:bg-surface-container-low transition-colors">
+        Vedi Appunti
+      </button>
+    </div>
+  </div>
+
+  <!-- Card 3: Cancelled -->
+  <div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-6 hover:shadow-[0_4px_6px_rgba(27,31,59,0.04)] transition-shadow duration-300 relative">
+    <div class="flex justify-between items-start mb-6 opacity-70">
+      <div class="flex items-center gap-4">
+        <div class="w-12 h-12 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant font-label-md">MB</div>
+        <div>
+          <h3 class="font-headline-sm text-headline-sm text-on-surface line-through decoration-outline-variant">Marta Bianchi</h3>
+          <p class="font-label-md text-label-md text-on-surface-variant flex items-center gap-1 mt-1">
+            <span class="material-symbols-outlined text-[14px]">piano</span>
+            Pianoforte
+          </p>
+        </div>
+      </div>
+      <span class="bg-error-container text-on-error-container font-label-md text-label-md px-3 py-1 rounded-full text-[10px] uppercase tracking-wider">
+        Annullata
+      </span>
+    </div>
+    <div class="bg-surface-bright rounded-lg p-4 mb-6 border border-outline-variant/50 opacity-70">
+      <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center gap-2 text-on-surface">
+          <span class="material-symbols-outlined text-outline text-[20px]">calendar_month</span>
+          <span class="font-body-lg text-body-lg line-through decoration-outline-variant">15 Ottobre 2024</span>
+        </div>
+      </div>
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2 text-on-surface-variant">
+          <span class="material-symbols-outlined text-[20px]">schedule</span>
+          <span class="font-body-md text-body-md line-through decoration-outline-variant">15:00 - 16:00</span>
+        </div>
+      </div>
+    </div>
+    <div class="flex gap-3">
+      <button class="flex-1 bg-surface-container-lowest text-primary-container border border-outline-variant font-label-md text-label-md py-2.5 rounded-lg hover:bg-surface-container-low transition-colors">
+        Riprogramma
+      </button>
+    </div>
+  </div>
+</div>

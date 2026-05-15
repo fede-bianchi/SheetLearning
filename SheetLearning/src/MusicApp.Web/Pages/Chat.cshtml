@@ -1,0 +1,178 @@
+@page
+@model ChatModel
+@{
+    ViewData["Title"] = "Chat - SheetLearning";
+}
+
+<!-- Chat Split Pane -->
+<div class="flex flex-1 overflow-hidden gap-gutter -mx-margin-mobile md:-mx-margin-desktop px-margin-mobile md:px-margin-desktop" style="height: calc(100vh - 160px);">
+  <!-- Left Pane: Conversations List -->
+  <aside class="w-full md:w-[340px] flex flex-col bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden shrink-0 hidden md:flex">
+    <div class="p-4 border-b border-outline-variant bg-surface-bright">
+      <h3 class="font-headline-sm text-headline-sm text-on-surface mb-4">Messages</h3>
+      <div class="relative w-full">
+        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+        <input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg py-2 pl-10 pr-4 font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all" placeholder="Search teachers..." type="text" />
+      </div>
+    </div>
+    <div class="flex-1 overflow-y-auto custom-scrollbar">
+      <!-- Active Conversation -->
+      <div class="p-4 flex items-start gap-3 cursor-pointer bg-primary-fixed/20 border-l-4 border-primary-container hover:bg-primary-fixed/30 transition-colors">
+        <div class="relative shrink-0">
+          <div class="w-12 h-12 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant font-label-md">ER</div>
+          <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-surface-container-lowest rounded-full"></span>
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="flex justify-between items-baseline mb-1">
+            <h4 class="font-label-md text-label-md text-on-surface truncate">Elena Rostova</h4>
+            <span class="font-label-md text-[10px] text-primary-container font-bold">10:42 AM</span>
+          </div>
+          <p class="font-body-md text-[13px] text-on-surface-variant truncate">That fingering looks much better!</p>
+        </div>
+        <div class="shrink-0 pt-1">
+          <span class="bg-primary-container text-white text-[10px] font-bold px-2 py-0.5 rounded-full">2</span>
+        </div>
+      </div>
+      <!-- Inactive Conversations -->
+      <div class="p-4 flex items-start gap-3 cursor-pointer hover:bg-surface-bright transition-colors border-b border-outline-variant/50">
+        <div class="relative shrink-0">
+          <div class="w-12 h-12 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant font-label-md">DC</div>
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="flex justify-between items-baseline mb-1">
+            <h4 class="font-label-md text-label-md text-on-surface truncate">David Chen</h4>
+            <span class="font-label-md text-[10px] text-on-surface-variant">Yesterday</span>
+          </div>
+          <p class="font-body-md text-[13px] text-on-surface-variant truncate">Don't forget to practice the scales.</p>
+        </div>
+      </div>
+      <div class="p-4 flex items-start gap-3 cursor-pointer hover:bg-surface-bright transition-colors border-b border-outline-variant/50">
+        <div class="relative shrink-0">
+          <div class="w-12 h-12 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant font-label-md">SJ</div>
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="flex justify-between items-baseline mb-1">
+            <h4 class="font-label-md text-label-md text-on-surface truncate">Sarah Jenkins</h4>
+            <span class="font-label-md text-[10px] text-on-surface-variant">Mon</span>
+          </div>
+          <p class="font-body-md text-[13px] text-on-surface-variant truncate">Great tone in the upper register today.</p>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Right Pane: Active Chat Window -->
+  <section class="flex-1 flex flex-col bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden relative">
+    <!-- Chat Header -->
+    <div class="px-6 py-4 border-b border-outline-variant bg-surface-bright flex items-center justify-between z-10 glass-panel absolute top-0 left-0 right-0">
+      <div class="flex items-center gap-4">
+        <button class="md:hidden text-on-surface-variant p-1 -ml-2">
+          <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        <div class="relative">
+          <div class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant font-label-md">ER</div>
+          <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-surface-container-lowest rounded-full"></span>
+        </div>
+        <div>
+          <h3 class="font-headline-sm text-[16px] text-on-surface">Elena Rostova</h3>
+          <p class="font-body-md text-[12px] text-on-surface-variant">Piano Teacher &bull; Online</p>
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <button class="p-2 text-on-surface-variant hover:bg-surface-container-low rounded-full transition-colors">
+          <span class="material-symbols-outlined">videocam</span>
+        </button>
+        <button class="p-2 text-on-surface-variant hover:bg-surface-container-low rounded-full transition-colors">
+          <span class="material-symbols-outlined">more_vert</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Chat History Area -->
+    <div class="flex-1 overflow-y-auto custom-scrollbar p-6 pt-24 pb-6 flex flex-col gap-6 bg-[#FAFAFC]">
+      <!-- Date Separator -->
+      <div class="flex justify-center">
+        <span class="bg-surface-container-low text-on-surface-variant font-label-md text-[11px] px-3 py-1 rounded-full border border-outline-variant/30">Today</span>
+      </div>
+
+      <!-- Teacher Message (Received) -->
+      <div class="flex gap-3 max-w-[80%]">
+        <div class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant text-[10px] shrink-0 mt-auto">ER</div>
+        <div class="flex flex-col gap-1 items-start">
+          <div class="bg-surface-container-lowest border border-outline-variant text-on-surface p-3.5 rounded-2xl rounded-bl-none shadow-sm font-body-md text-body-md">
+            Hello! Did you manage to look over the new Chopin nocturne piece I sent yesterday?
+          </div>
+          <span class="text-[10px] text-on-surface-variant font-label-md pl-1">10:15 AM</span>
+        </div>
+      </div>
+
+      <!-- Student Message (Sent) -->
+      <div class="flex gap-3 max-w-[80%] self-end">
+        <div class="flex flex-col gap-1 items-end">
+          <div class="bg-primary-container text-on-primary p-3.5 rounded-2xl rounded-br-none shadow-sm font-body-md text-body-md">
+            Hi Elena! Yes, I've been practicing the first two pages. The left-hand arpeggios are a bit tricky in measure 14.
+          </div>
+          <div class="flex items-center gap-1 pr-1">
+            <span class="text-[10px] text-on-surface-variant font-label-md">10:30 AM</span>
+            <span class="material-symbols-outlined text-[14px] text-primary-container">done_all</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Student Message with Attachment -->
+      <div class="flex gap-3 max-w-[80%] self-end -mt-4">
+        <div class="flex flex-col gap-1 items-end">
+          <div class="bg-primary-container text-on-primary p-3.5 rounded-2xl rounded-br-none rounded-tr-sm shadow-sm font-body-md text-body-md flex items-center gap-3">
+            <div class="bg-white/20 p-2 rounded-lg">
+              <span class="material-symbols-outlined text-on-primary">audio_file</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="font-label-md text-on-primary text-[12px]">measure_14_practice.m4a</span>
+              <span class="text-on-primary/70 text-[10px]">0:45 &bull; 1.2 MB</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-1 pr-1">
+            <span class="text-[10px] text-on-surface-variant font-label-md">10:32 AM</span>
+            <span class="material-symbols-outlined text-[14px] text-primary-container">done_all</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Teacher Message (Received) -->
+      <div class="flex gap-3 max-w-[80%]">
+        <div class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant text-[10px] shrink-0 mt-auto">ER</div>
+        <div class="flex flex-col gap-1 items-start">
+          <div class="bg-surface-container-lowest border border-outline-variant text-on-surface p-3.5 rounded-2xl rounded-bl-none shadow-sm font-body-md text-body-md">
+            I just listened to the recording. That fingering looks much better! Try to keep the wrist more relaxed during the transition.
+          </div>
+          <span class="text-[10px] text-on-surface-variant font-label-md pl-1">10:42 AM</span>
+        </div>
+      </div>
+
+      <!-- Typing Indicator -->
+      <div class="flex gap-3 max-w-[80%] items-end mt-2">
+        <div class="w-6 h-6 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant text-[8px] shrink-0">ER</div>
+        <span class="text-[12px] font-body-md text-on-surface-variant italic">Elena sta scrivendo...</span>
+      </div>
+    </div>
+
+    <!-- Message Input Area -->
+    <div class="p-4 bg-surface-container-lowest border-t border-outline-variant">
+      <div class="flex items-end gap-2 bg-surface-bright border border-outline-variant rounded-2xl p-2 focus-within:border-primary-container focus-within:ring-1 focus-within:ring-primary-container transition-all shadow-sm">
+        <button class="p-2 text-outline hover:text-primary-container transition-colors rounded-full hover:bg-surface-container-low shrink-0 mb-1">
+          <span class="material-symbols-outlined">attach_file</span>
+        </button>
+        <textarea class="w-full bg-transparent border-none focus:ring-0 resize-none max-h-[120px] min-h-[44px] py-3 font-body-md text-body-md text-on-surface placeholder:text-outline custom-scrollbar" placeholder="Type a message..." rows="1"></textarea>
+        <button class="p-2 text-outline hover:text-primary-container transition-colors rounded-full hover:bg-surface-container-low shrink-0 mb-1">
+          <span class="material-symbols-outlined">mic</span>
+        </button>
+        <button class="p-3 bg-primary-container text-on-primary rounded-xl hover:brightness-110 transition-all shadow-sm shrink-0 mb-0.5 ml-1 flex items-center justify-center">
+          <span class="material-symbols-outlined text-[20px]">send</span>
+        </button>
+      </div>
+      <div class="mt-2 text-center hidden md:block">
+        <span class="text-[11px] font-label-md text-outline">Press Enter to send, Shift + Enter for new line</span>
+      </div>
+    </div>
+  </section>
+</div>

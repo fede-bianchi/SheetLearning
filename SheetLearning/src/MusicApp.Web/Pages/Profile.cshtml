@@ -1,0 +1,122 @@
+@page
+@model ProfileModel
+@{
+    ViewData["Title"] = "Impostazioni Profilo - SheetLearning";
+}
+
+<div class="max-w-[1440px] mx-auto">
+  <div class="mb-8">
+    <h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface mb-2">Impostazioni Profilo</h1>
+    <p class="font-body-lg text-body-lg text-on-surface-variant">Gestisci le tue informazioni personali, la sicurezza e le preferenze del tuo account SheetLearning.</p>
+  </div>
+
+  <!-- Bento Grid Layout -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+    <!-- Left Column: Avatar & Quick Actions -->
+    <div class="lg:col-span-1 space-y-gutter">
+      <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 flex flex-col items-center text-center shadow-sm hover:shadow-md transition-shadow duration-300">
+        <div class="relative w-32 h-32 rounded-full mb-4 group cursor-pointer">
+          <div class="w-full h-full rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant text-4xl font-headline-md border-4 border-surface-bright shadow-sm">
+            MR
+          </div>
+          <div class="absolute inset-0 bg-inverse-surface/60 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+            <span class="material-symbols-outlined text-on-secondary text-3xl">photo_camera</span>
+          </div>
+        </div>
+        <h2 class="font-headline-md text-headline-md text-on-surface mb-1">Marco Rossi</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-6">Pianista Classico</p>
+        <button class="w-full py-2 px-4 rounded-lg bg-primary-container/10 text-primary-container font-label-md text-label-md hover:bg-primary-container/20 transition-colors flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined text-[18px]">upload</span>
+          Carica Nuova Foto
+        </button>
+      </div>
+    </div>
+
+    <!-- Right Column: Forms -->
+    <div class="lg:col-span-2 space-y-gutter">
+      <!-- Personal Information Card -->
+      <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 md:p-8 shadow-sm">
+        <h3 class="font-headline-sm text-headline-sm text-on-surface mb-6 flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary">person</span>
+          Informazioni Personali
+        </h3>
+        <form class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="space-y-2">
+            <label class="font-label-md text-label-md text-on-surface-variant block">Nome Completo</label>
+            <input class="w-full bg-surface-bright border border-outline-variant rounded-lg px-4 py-2.5 font-body-md text-body-md text-on-surface focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 outline-none transition-all" type="text" value="Marco Rossi" />
+          </div>
+          <div class="space-y-2">
+            <label class="font-label-md text-label-md text-on-surface-variant block">Nickname</label>
+            <input class="w-full bg-surface-bright border border-outline-variant rounded-lg px-4 py-2.5 font-body-md text-body-md text-on-surface focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 outline-none transition-all" type="text" value="marcor_piano" />
+          </div>
+          <div class="space-y-2 md:col-span-2">
+            <label class="font-label-md text-label-md text-on-surface-variant block">Indirizzo Email</label>
+            <input class="w-full bg-surface-bright border border-outline-variant rounded-lg px-4 py-2.5 font-body-md text-body-md text-on-surface focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 outline-none transition-all" type="email" value="marco.rossi@example.com" />
+          </div>
+          <div class="md:col-span-2 flex justify-end mt-2">
+            <button class="bg-primary-container text-on-primary-container rounded-lg px-6 py-2.5 font-label-md text-label-md hover:opacity-90 transition-opacity shadow-sm" type="button">
+              Salva Modifiche
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Security & Preferences Row -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+        <!-- Security Card -->
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm">
+          <h3 class="font-headline-sm text-headline-sm text-on-surface mb-6 flex items-center gap-2">
+            <span class="material-symbols-outlined text-error">lock</span>
+            Sicurezza
+          </h3>
+          <form class="space-y-4">
+            <div class="space-y-2">
+              <label class="font-label-md text-label-md text-on-surface-variant block">Password Attuale</label>
+              <input class="w-full bg-surface-bright border border-outline-variant rounded-lg px-4 py-2 font-body-md text-body-md text-on-surface focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 outline-none transition-all" placeholder="••••••••" type="password" />
+            </div>
+            <div class="space-y-2">
+              <label class="font-label-md text-label-md text-on-surface-variant block">Nuova Password</label>
+              <input class="w-full bg-surface-bright border border-outline-variant rounded-lg px-4 py-2 font-body-md text-body-md text-on-surface focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 outline-none transition-all" placeholder="Inserisci nuova password" type="password" />
+            </div>
+            <div class="pt-4">
+              <button class="w-full border border-outline-variant text-on-surface rounded-lg px-4 py-2 font-label-md text-label-md hover:bg-surface-container-low transition-colors" type="button">
+                Aggiorna Password
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Account Preferences Card -->
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm">
+          <h3 class="font-headline-sm text-headline-sm text-on-surface mb-6 flex items-center gap-2">
+            <span class="material-symbols-outlined text-secondary">tune</span>
+            Preferenze Account
+          </h3>
+          <div class="space-y-6">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="font-body-lg text-body-lg text-on-surface">Lingua Piattaforma</p>
+                <p class="font-label-md text-label-md text-on-surface-variant">Seleziona la tua lingua preferita.</p>
+              </div>
+              <select class="bg-surface-bright border border-outline-variant rounded-lg px-3 py-1.5 font-body-md text-body-md text-on-surface focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 outline-none cursor-pointer">
+                <option value="it">Italiano</option>
+                <option value="en">English</option>
+                <option value="fr">Fran&ccedil;ais</option>
+              </select>
+            </div>
+            <hr class="border-outline-variant" />
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="font-body-lg text-body-lg text-on-surface">Notifiche Email</p>
+                <p class="font-label-md text-label-md text-on-surface-variant">Ricevi aggiornamenti sui corsi.</p>
+              </div>
+              <div class="w-11 h-6 bg-primary-container rounded-full relative cursor-pointer">
+                <div class="absolute right-1 top-1 w-4 h-4 bg-white rounded-full shadow-sm"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
