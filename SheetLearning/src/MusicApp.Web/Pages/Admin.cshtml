@@ -1,0 +1,204 @@
+@page
+@model AdminModel
+@{
+    ViewData["Title"] = "Pannello di Amministrazione - SheetLearning";
+}
+
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+  <div>
+    <h1 class="font-headline-md text-headline-md text-on-surface">Pannello di Amministrazione</h1>
+    <p class="font-body-md text-body-md text-on-surface-variant mt-1">Panoramica delle metriche chiave e delle attivit&agrave; recenti sulla piattaforma.</p>
+  </div>
+  <button class="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:bg-surface-tint transition-all shadow-sm hover:shadow-md active:scale-95 w-full md:w-auto">
+    <span class="material-symbols-outlined text-[18px]">download</span>
+    Scarica Report PDF
+  </button>
+</div>
+
+<!-- KPI Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
+  <!-- Card 1: Total Users -->
+  <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+    <div class="flex justify-between items-start mb-4">
+      <div class="p-2 bg-primary-fixed rounded-lg text-primary">
+        <span class="material-symbols-outlined">group</span>
+      </div>
+      <span class="font-label-md text-label-md text-secondary bg-secondary-fixed/50 px-2.5 py-1 rounded-full flex items-center gap-1">
+        <span class="material-symbols-outlined text-[14px]">arrow_upward</span> 12.5%
+      </span>
+    </div>
+    <p class="font-body-md text-body-md text-on-surface-variant mb-1">Utenti Totali</p>
+    <h3 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface tracking-tight">24,592</h3>
+    <div class="h-10 mt-4 w-full">
+      <svg class="w-full h-full" preserveaspectratio="none" viewBox="0 0 100 30">
+        <path d="M0,25 L10,20 L20,22 L30,15 L40,18 L50,10 L60,12 L70,5 L80,8 L90,2 L100,5" fill="none" stroke="#5341cd" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+        <path d="M0,25 L10,20 L20,22 L30,15 L40,18 L50,10 L60,12 L70,5 L80,8 L90,2 L100,5 L100,30 L0,30 Z" fill="url(#grad1)" opacity="0.2"></path>
+        <defs>
+          <linearGradient id="grad1" x1="0%" x2="0%" y1="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#5341cd;stop-opacity:1"></stop>
+            <stop offset="100%" style="stop-color:#5341cd;stop-opacity:0"></stop>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Card 2: Revenue -->
+  <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
+    <div class="flex justify-between items-start mb-4">
+      <div class="p-2 bg-primary-fixed rounded-lg text-primary">
+        <span class="material-symbols-outlined">payments</span>
+      </div>
+      <span class="font-label-md text-label-md text-secondary bg-secondary-fixed/50 px-2.5 py-1 rounded-full flex items-center gap-1">
+        <span class="material-symbols-outlined text-[14px]">arrow_upward</span> 8.2%
+      </span>
+    </div>
+    <p class="font-body-md text-body-md text-on-surface-variant mb-1">Entrate Mensili</p>
+    <h3 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface tracking-tight">&euro;45,200</h3>
+    <div class="h-10 mt-4 w-full">
+      <svg class="w-full h-full" preserveaspectratio="none" viewBox="0 0 100 30">
+        <path d="M0,28 L15,25 L30,26 L45,18 L60,20 L75,10 L90,12 L100,5" fill="none" stroke="#5341cd" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Card 3: Active Teachers -->
+  <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
+    <div class="flex justify-between items-start mb-4">
+      <div class="p-2 bg-tertiary-fixed rounded-lg text-tertiary">
+        <span class="material-symbols-outlined">school</span>
+      </div>
+      <span class="font-label-md text-label-md text-on-surface-variant bg-surface-container px-2.5 py-1 rounded-full flex items-center gap-1">
+        <span class="material-symbols-outlined text-[14px]">horizontal_rule</span> 0.0%
+      </span>
+    </div>
+    <p class="font-body-md text-body-md text-on-surface-variant mb-1">Insegnanti Attivi</p>
+    <h3 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface tracking-tight">184</h3>
+    <div class="h-10 mt-4 w-full">
+      <svg class="w-full h-full" preserveaspectratio="none" viewBox="0 0 100 30">
+        <path d="M0,15 L20,16 L40,14 L60,15 L80,16 L100,15" fill="none" stroke="#787586" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Card 4: Lesson Completion Rate -->
+  <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
+    <div class="flex justify-between items-start mb-4">
+      <div class="p-2 bg-error-container rounded-lg text-error">
+        <span class="material-symbols-outlined">analytics</span>
+      </div>
+      <span class="font-label-md text-label-md text-error bg-error-container/50 px-2.5 py-1 rounded-full flex items-center gap-1">
+        <span class="material-symbols-outlined text-[14px]">arrow_downward</span> 2.1%
+      </span>
+    </div>
+    <p class="font-body-md text-body-md text-on-surface-variant mb-1">Tasso Completamento</p>
+    <h3 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface tracking-tight">76.4%</h3>
+    <div class="h-10 mt-4 w-full">
+      <svg class="w-full h-full" preserveaspectratio="none" viewBox="0 0 100 30">
+        <path d="M0,5 L20,8 L40,6 L60,15 L80,12 L100,20" fill="none" stroke="#ba1a1a" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- Secondary Grids: Table & Chart -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+  <!-- Moderation Log Table (Left/Larger) -->
+  <div class="lg:col-span-8 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm flex flex-col overflow-hidden">
+    <div class="p-6 border-b border-outline-variant flex justify-between items-center">
+      <h2 class="font-headline-sm text-headline-sm text-on-surface">Registro di Moderazione Recente</h2>
+      <button class="text-primary hover:text-surface-tint font-label-md text-label-md transition-colors">Vedi Tutti</button>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="bg-surface-container-low border-b border-outline-variant">
+            <th class="py-3 px-6 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Data</th>
+            <th class="py-3 px-6 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Utente</th>
+            <th class="py-3 px-6 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Azione</th>
+            <th class="py-3 px-6 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Stato</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-outline-variant font-body-md text-body-md text-on-surface">
+          <tr class="hover:bg-surface-container-low/50 transition-colors">
+            <td class="py-4 px-6 whitespace-nowrap text-on-surface-variant">12 Ott, 14:30</td>
+            <td class="py-4 px-6 font-body-lg text-body-lg">Marco Rossi</td>
+            <td class="py-4 px-6">Segnalazione commento inappropriato</td>
+            <td class="py-4 px-6">
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-md text-label-md bg-[#E8F5E9] text-[#2E7D32]">Risolto</span>
+            </td>
+          </tr>
+          <tr class="hover:bg-surface-container-low/50 transition-colors">
+            <td class="py-4 px-6 whitespace-nowrap text-on-surface-variant">12 Ott, 11:15</td>
+            <td class="py-4 px-6 font-body-lg text-body-lg">Giulia Bianchi</td>
+            <td class="py-4 px-6">Verifica credenziali insegnante</td>
+            <td class="py-4 px-6">
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-md text-label-md bg-[#FFF8E1] text-[#F57F17]">In Attesa</span>
+            </td>
+          </tr>
+          <tr class="hover:bg-surface-container-low/50 transition-colors">
+            <td class="py-4 px-6 whitespace-nowrap text-on-surface-variant">11 Ott, 18:45</td>
+            <td class="py-4 px-6 font-body-lg text-body-lg">Luca Verdi</td>
+            <td class="py-4 px-6">Rimozione spartito coperto da copyright</td>
+            <td class="py-4 px-6">
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-md text-label-md bg-[#E8F5E9] text-[#2E7D32]">Risolto</span>
+            </td>
+          </tr>
+          <tr class="hover:bg-surface-container-low/50 transition-colors">
+            <td class="py-4 px-6 whitespace-nowrap text-on-surface-variant">11 Ott, 09:20</td>
+            <td class="py-4 px-6 font-body-lg text-body-lg">Elena Neri</td>
+            <td class="py-4 px-6">Disputa rimborso abbonamento</td>
+            <td class="py-4 px-6">
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-md text-label-md bg-[#FFEBEE] text-[#C62828]">Richiede Azione</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Teacher Rating Chart (Right/Smaller) -->
+  <div class="lg:col-span-4 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm flex flex-col p-6">
+    <h2 class="font-headline-sm text-headline-sm text-on-surface mb-2">Distribuzione Valutazioni</h2>
+    <p class="font-body-md text-body-md text-on-surface-variant mb-6">Soddisfazione degli studenti per le lezioni di questo mese.</p>
+    <div class="flex-1 flex flex-col justify-center space-y-6">
+      <div class="flex items-center gap-4">
+        <div aria-hidden="true" class="text-3xl">&#x1F60A;</div>
+        <div class="flex-1">
+          <div class="flex justify-between mb-1">
+            <span class="font-body-md text-body-md text-on-surface">Positivo</span>
+            <span class="font-label-md text-label-md text-on-surface-variant">78%</span>
+          </div>
+          <div class="w-full bg-surface-container rounded-full h-2">
+            <div class="bg-primary h-2 rounded-full" style="width: 78%"></div>
+          </div>
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <div aria-hidden="true" class="text-3xl">&#x1F610;</div>
+        <div class="flex-1">
+          <div class="flex justify-between mb-1">
+            <span class="font-body-md text-body-md text-on-surface">Neutro</span>
+            <span class="font-label-md text-label-md text-on-surface-variant">15%</span>
+          </div>
+          <div class="w-full bg-surface-container rounded-full h-2">
+            <div class="bg-tertiary-container h-2 rounded-full" style="width: 15%"></div>
+          </div>
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <div aria-hidden="true" class="text-3xl">&#x1F61E;</div>
+        <div class="flex-1">
+          <div class="flex justify-between mb-1">
+            <span class="font-body-md text-body-md text-on-surface">Negativo</span>
+            <span class="font-label-md text-label-md text-on-surface-variant">7%</span>
+          </div>
+          <div class="w-full bg-surface-container rounded-full h-2">
+            <div class="bg-error h-2 rounded-full" style="width: 7%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
